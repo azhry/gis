@@ -2,7 +2,8 @@
 
 class MY_Controller extends CI_Controller
 {
-  public $title = 'Laporan Jalan';
+  	public $title = 'Laporan Jalan';
+	
 	public function __construct()
 	{
 		parent::__construct();
