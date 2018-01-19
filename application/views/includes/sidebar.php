@@ -1,59 +1,61 @@
-<div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="<?= base_url('') ?>" class="site_title"><img width="20%" src="<?= base_url('assets') ?>/logo.jpg" class="img img-thumbnail img-responsive"> <span>Pemetaan Jalan</span></a>
-            </div>
-
-            <div class="clearfix"></div>
-
-            <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="<?= base_url('assets/') ?>/user.png" alt="User" class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Welcome,</span>
-                <h2><?= $nip ?></h2>
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
-
-            <br />
-
-            <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <h3>Menu</h3>
-                <ul class="nav side-menu">
-                  <?php if ($role == 'admin'): ?>
-                  <li><a href="<?= base_url('admin') ?>"><i class="fa fa-home"></i> Dashboard</a>
-                    <ul class="nav child_menu">
-                    </ul>
-                  </li>
-                  <li><a href="<?= base_url('admin/jalan') ?>"><i class="fa fa-user fa-fw"></i> Data Jalan</a>
-                    <ul class="nav child_menu">
-                    </ul>
-                  </li>
-                  <li><a href="<?= base_url('admin/user') ?>"><i class="fa fa-bar-chart-o"></i> Data User</a>
-                    <ul class="nav child_menu">
-                    </ul>
-                  </li>
-                  <?php elseif ($role == 'kepala dinas'): ?>
-                  <li><a href="<?= base_url('kepala-dinas') ?>"><i class="fa fa-home"></i> Dashboard</a>
-                    <ul class="nav child_menu">
-                  </ul>
-                  </li>
-                  <li><a href="<?= base_url('kepala-dinas/jalan') ?>"><i class="fa fa-user fa-fw"></i> Data Jalan</a>
-                    <ul class="nav child_menu">
-                    </ul>
-                  </li>
-                  <?php endif; ?>
-                </ul>
-              </div>
-
-            </div>
-            <!-- /sidebar menu -->
-          </div>
+<div class="site-menubar">
+    <div class="site-menubar-body">
+      <div>
+        <div>
+          <ul class="site-menu">
+            <li class="site-menu-category">General</li>
+            <li class="site-menu-item has-sub active open">
+              <a href="javascript:void(0)" data-slug="dashboard">
+                <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
+                <span class="site-menu-title">Dashboard</span>
+                <div class="site-menu-badge">
+                  <span class="badge badge-success">2</span>
+                </div>
+              </a>
+              <ul class="site-menu-sub">
+                <li class="site-menu-item">
+                  <a class="animsition-link" href="../index.html" data-slug="dashboard-v1">
+                    <i class="site-menu-icon " aria-hidden="true"></i>
+                    <span class="site-menu-title">Dashboard v1</span>
+                  </a>
+                </li>
+                <li class="site-menu-item active">
+                  <a class="animsition-link" href="v2.html" data-slug="dashboard-v2">
+                    <i class="site-menu-icon " aria-hidden="true"></i>
+                    <span class="site-menu-title">Dashboard v2</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="site-menu-item has-sub">
+              <a href="javascript:void(0)" data-slug="layout">
+                <i class="site-menu-icon wb-layout" aria-hidden="true"></i>
+                <span class="site-menu-title">Layouts</span>
+                <span class="site-menu-arrow"></span>
+              </a>
+              <ul class="site-menu-sub">
+                <li class="site-menu-item">
+                  <a class="animsition-link" href="../layouts/grids.html" data-slug="layout-grids">
+                    <i class="site-menu-icon " aria-hidden="true"></i>
+                    <span class="site-menu-title">Grid Scaffolding</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="site-menu-item">
+              <a class="animsition-link" href="../layouts/headers.html" data-slug="layout-headers">
+                <i class="site-menu-icon " aria-hidden="true"></i>
+                <span class="site-menu-title">Different Headers</span>
+              </a>
+            </li>
+            <li class="site-menu-item">
+              <a class="animsition-link" href="../layouts/bordered-header.html" data-slug="layout-bordered-header">
+                <i class="site-menu-icon " aria-hidden="true"></i>
+                <span class="site-menu-title">Bordered Header</span>
+              </a>
+            </li>
+          </ul>
         </div>
+      </div>
+    </div>
+  </div>

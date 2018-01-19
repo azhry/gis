@@ -1,31 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title><?= $title ?></title>
+<html class="no-js before-run" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description" content="bootstrap admin template">
+  <meta name="author" content="">
 
-    <!-- Bootstrap -->
-    <link href="<?= base_url('assets') ?>/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="<?= base_url('assets') ?>/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="<?= base_url('assets') ?>/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- bootstrap-daterangepicker -->
-    <link href="<?= base_url('assets') ?>/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+  <title>Dashboard | Remark Admin Template</title>
 
-    <!-- Custom Theme Style -->
-    <link href="<?= base_url('assets') ?>/build/css/custom.min.css" rel="stylesheet">
+  <link rel="apple-touch-icon" href="<?= base_url('assets') ?>/images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="<?= base_url('assets') ?>/images/favicon.ico">
 
-    <!-- jQuery -->
-    <script src="<?= base_url('assets') ?>/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/css/bootstrap-extend.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/css/site.min.css">
 
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcsdhzlDXAOHihT8kYUqvxBPhXDv4qtm0"></script>
-  </head>
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/animsition/animsition.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/asscrollable/asScrollable.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/switchery/switchery.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/intro-js/introjs.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/slidepanel/slidePanel.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/flag-icon-css/flag-icon.css">
 
-  <body class="nav-md">
+  <!-- Plugin -->
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/chartist-js/chartist.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/aspieprogress/asPieProgress.css">
+
+  <!-- Page -->
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/css/dashboard/v2.css">
+
+  <!-- Fonts -->
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/fonts/web-icons/web-icons.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/fonts/brand-icons/brand-icons.min.css">
+  <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+
+
+  <!--[if lt IE 9]>
+    <script src="../../assets/vendor/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+
+  <!--[if lt IE 10]>
+    <script src="../../assets/vendor/media-match/media.match.min.js"></script>
+    <script src="../../assets/vendor/respond/respond.min.js"></script>
+    <![endif]-->
+
+  <!-- Scripts -->
+  <script src="<?= base_url('assets') ?>/vendor/modernizr/modernizr.js"></script>
+  <script src="<?= base_url('assets') ?>/vendor/breakpoints/breakpoints.js"></script>
+  <script>
+    Breakpoints();
+  </script>
+</head>
+<body class="dashboard">
