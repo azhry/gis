@@ -24,6 +24,9 @@
   <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/slidepanel/slidePanel.css">
   <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/flag-icon-css/flag-icon.css">
 
+  <!-- Page -->
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/css/../fonts/font-awesome/font-awesome.css">
+
   <!-- Plugin -->
   <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/chartist-js/chartist.css">
   <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/aspieprogress/asPieProgress.css">
