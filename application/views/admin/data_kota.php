@@ -46,7 +46,7 @@
                   <td>
                     <center>
                       <a href="<?= base_url('admin/detail-Kota/' . $row->id) ?>" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a>
-                      <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit" onclick="get_Kota(<?= $row->id ?>);"><i class="fa fa-edit"></i> Edit</a>
+                      <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit" onclick="get_kota(<?= $row->id ?>);"><i class="fa fa-edit"></i> Edit</a>
                       <a href="<?= base_url('admin/Kota?delete=true&id=' . $row->id) ?>" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
                     </center>
                   </td>
@@ -149,40 +149,65 @@
 
             <div class="modal fade" tabindex="-1" role="dialog" id="edit">
               <div class="modal-dialog" role="document">
-                <?= form_open_multipart('admin/Kota') ?>
+                <?= form_open('admin/kota', ['id' => 'edit_data']) ?>
                <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Detail Data Kota</h4>
                   </div>
                   <div class="modal-body">
-                        <input type="hidden" name="id_data" id="id_data">
+                        <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="nama">Nama<span class="required">*</span></label>
-                            <input type="text" class="form-control" name="nama" id="nama" required>
+                            <label for="Namobj">Namobj<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="namobj" required id="namobj">
                         </div>
                         <div class="form-group">
-                            <label for="kelurahan">Kelurahan<span class="required">*</span></label>
-                            <input type="text" class="form-control" name="kelurahan" id="kelurahan" required>
+                            <label for="Kl_dat_das">Kl_dat_das<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="kl_dat_das" required id="kl_dat_das">
                         </div>
                         <div class="form-group">
-                            <label for="kecamatan">Kecamatan<span class="required">*</span></label>
-                            <input type="text" class="form-control" name="kecamatan" id="kecamatan" required>
+                            <label for="thn_data">Tahun Data<span class="required">*</span></label>
+                            <input type="number" class="form-control" name="thn_data" required id="thn_data">
                         </div>
                         <div class="form-group">
-                          <label for="tipe">Tipe<span class="required">*</span></label>
-                          <div id="tipe"></div>
+                            <label for="Provinsi">Provinsi<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="provinsi" required id="provinsi">
                         </div>
                         <div class="form-group">
-                          <label for="kondisi">Kondisi<span class="required">*</span></label>
-                          <div id="kondisi"></div>
+                            <label for="Kabupaten Kota">Kabupaten Kota<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="kab_kota" required id="kab_kota">
                         </div>
                         <div class="form-group">
-                          <label>Pilih Koordinat Kota</label>
-                          <div class="gmap" id="map-edit" style="width: 100%; height: 250px;"></div>
-                          <p>Koordinat: <span id="map-edit-latitude"></span>, <span id="map-edit-longitude"></span></p>
-                          <input type="hidden" id="map-edit-hidden_latitude" name="latitude" required>
-                          <input type="hidden" id="map-edit-hidden_longitude" name="longitude" required>
+                            <label for="Vol">Vol<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="vol" required id="vol">
+                        </div>
+                        <div class="form-group">
+                            <label for="Biaya">Biaya<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="biaya" required id="biaya">
+                        </div>
+                        <div class="form-group">
+                            <label for="Longitude">Longitude<span class="required">*</span></label>
+                            <input type="number" class="form-control" name="longitude" required id="longitude">
+                        </div>
+                        <div class="form-group">
+                            <label for="Latitude">Latitude<span class="required">*</span></label>
+                            <input type="number" class="form-control" name="latitude" required id="latitude">
+                        </div>
+                        <div class="form-group">
+                            <label for="Remarks">Remarks<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="remarks" required id="remarks">
+                        </div>
+                        <div class="form-group">
+                            <label for="Metadata">Metadata<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="metadata" required id="metadata">
+                        </div>
+                        <div class="form-group">
+                            <label for="lcode">lcode<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="lcode" required id="lcode">
+                        </div>
+                        <div class="form-group">
+                            <label for="fcode">fcode<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="fcode" required id="fcode">
                         </div>
                         <!-- <div class="form-inline">
                           <div class="form-group">
@@ -194,18 +219,18 @@
                             <input type="text" name="longitude" id="longitude" class="form-control" required>
                           </div>
                         </div> -->
-                        <br>
+                        <!-- <br>
                         <div id="img-placeholder">
                           <img src="<?= base_url('img/150x150.png') ?>" width="150" height="150">
                         </div>
                         <div class="form-group">
                             <label for="foto">Upload Foto Kota<span class="required">*</span></label>
                             <input type="file" name="foto" id="foto">
-                        </div>
+                        </div> -->
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                    <input type="submit" name="edit" value="Edit" class="btn btn-primary">
+                    <input type="submit" name="edit" value="Edit" class="btn btn-primary" onclick="edit_data()">
                   </div>
                   <?= form_close() ?>
                 </div><!-- /.modal-content -->
@@ -228,28 +253,40 @@
                   $("#add").submit();
                 }
 
-                function get_Kota(id_data) {
+                function edit_data(){
+                  $("#edit_data").submit();
+                }
+
+                function get_kota(id) {
                   $.ajax({
                     url: '<?= base_url('admin/Kota') ?>',
                     type: 'POST',
                     data: {
-                      id_data: id_data,
+                      id: id,
                       get: true
                     },
                     success: function(response) {
                       var json = $.parseJSON(response);
-                      $('#id_data').val(json.id_data);
-                      $('#nama').val(json.nama);
-                      $('#kelurahan').val(json.kelurahan);
-                      $('#kecamatan').val(json.kecamatan);
+                      $('#id').val(json.id);
+                      $('#namobj').val(json.namobj);
+                      $('#kl_dat_das').val(json.kl_dat_das);
+                      $('#thn_data').val(json.thn_data);
                       $('#latitude').val(json.latitude);
                       $('#longitude').val(json.longitude);
+                      $('#provinsi').val(json.provinsi);
+                      $('#kab_kota').val(json.kab_kota);
+                      $('#vol').val(json.vol);
+                      $('#biaya').val(json.biaya);
+                      $('#remarks').val(json.remarks);
+                      $('#metadata').val(json.metadata);
+                      $('#lcode').val(json.lcode);
+                      $('#fcode').val(json.fcode);
                       
-                      $('#tipe').html(json.tipe_Kota);
-                      $('#kondisi').html(json.kondisi_Kota);
-                      $('#img-placeholder').html('<img src="<?= base_url('img') ?>/' + json.id_data + '.jpg?' + json.id_data + '" width="150" height="150">');
+                      // $('#tipe').html(json.tipe_Kota);
+                      // $('#kondisi').html(json.kondisi_Kota);
+                      // $('#img-placeholder').html('<img src="<?= base_url('img') ?>/' + json.id_data + '.jpg?' + json.id_data + '" width="150" height="150">');
 
-                      editMap('map-edit', json.latitude, json.longitude);
+                      // editMap('map-edit', json.latitude, json.longitude);
                     },
                     error: function(e) {
                       console.log(e.responseText);

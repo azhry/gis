@@ -179,7 +179,7 @@ class Admin extends MY_Controller
 			exit;
 		}
 
-		if ($this->POST('edit') && $this->POST('id_data'))
+		if ($this->POST('edit') && $this->POST('id'))
 		{
 			$this->data['kota'] = [
 				'namobj'		=> $this->POST('namobj'),
@@ -197,8 +197,8 @@ class Admin extends MY_Controller
 				'fcode'			=> $this->POST('fcode')
 			];
 
-			$this->kota_m->update($this->POST('id_data'), $this->data['kota']);
-			$this->upload($this->POST('id_data'), '../img', 'foto');
+			$this->kota_m->update($this->POST('id'), $this->data['kota']);
+			//$this->upload($this->POST('id_data'), '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data kota berhasil diedit');
 			redirect('admin/kota');
@@ -208,18 +208,18 @@ class Admin extends MY_Controller
 		if ($this->POST('get') && $this->POST('id'))
 		{
 			$this->data['kota'] = $this->kota_m->get_row(['id' => $this->POST('id')]);
-			$tipe 		= [
-				'Tanah' => 'Tanah', 
-				'Semen' => 'Semen', 
-				'Aspal' => 'Aspal'
-			];
-			$kondisi	= [
-				'Baik'  => 'Baik', 
-				'Sedang'=> 'Sedang', 
-				'Buruk'	=> 'Buruk'
-			];
-			$this->data['kota']->tipe_kota = form_dropdown('tipe', $tipe, $this->data['kota']->tipe, ['class' => 'form-control']);
-			$this->data['kota']->kondisi_kota = form_dropdown('kondisi', $kondisi, $this->data['kota']->kondisi, ['class' => 'form-control']);
+			// $tipe 		= [
+			// 	'Tanah' => 'Tanah', 
+			// 	'Semen' => 'Semen', 
+			// 	'Aspal' => 'Aspal'
+			// ];
+			// $kondisi	= [
+			// 	'Baik'  => 'Baik', 
+			// 	'Sedang'=> 'Sedang', 
+			// 	'Buruk'	=> 'Buruk'
+			// ];
+			// $this->data['kota']->tipe_kota = form_dropdown('tipe', $tipe, $this->data['kota']->tipe, ['class' => 'form-control']);
+			// $this->data['kota']->kondisi_kota = form_dropdown('kondisi', $kondisi, $this->data['kota']->kondisi, ['class' => 'form-control']);
 			echo json_encode($this->data['kota']);
 			exit;
 		}
@@ -251,7 +251,7 @@ class Admin extends MY_Controller
 		}
 
 		$this->load->model('kota_m');
-		$this->data['kota'] = $this->kota_m->get_row(['id_data' => $this->data['id_data']]);
+		$this->data['kota'] = $this->kota_m->get_row(['id' => $this->data['id_data']]);
 		if (!$this->data['kota'])
 		{
 			$this->flashmsg('<i class="fa fa-warning"></i> Data kota tidak ditemukan', 'danger');
@@ -259,7 +259,7 @@ class Admin extends MY_Controller
 			exit;
 		}
 
-		$this->data['title'] 	= 'Detail kota | ' . $this->title;
+		$this->data['title'] 	= 'Detail Kota | ' . $this->title;
 		$this->data['content']	= 'admin/detail_kota';
 		$this->template($this->data);
 	}
