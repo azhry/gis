@@ -7,7 +7,7 @@
   <meta name="description" content="bootstrap admin template">
   <meta name="author" content="">
 
-  <title>Dashboard | Remark Admin Template</title>
+  <title><?= $title ?></title>
 
   <link rel="apple-touch-icon" href="<?= base_url('assets') ?>/images/apple-touch-icon.png">
   <link rel="shortcut icon" href="<?= base_url('assets') ?>/images/favicon.ico">
@@ -28,6 +28,11 @@
   <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/chartist-js/chartist.css">
   <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/aspieprogress/asPieProgress.css">
 
+  <!-- Plugin -->
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/datatables-bootstrap/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/datatables-fixedheader/dataTables.fixedHeader.css">
+  <link rel="stylesheet" href="<?= base_url('assets') ?>/vendor/datatables-responsive/dataTables.responsive.css">
+
   <!-- Page -->
   <link rel="stylesheet" href="<?= base_url('assets') ?>/css/dashboard/v2.css">
 
@@ -37,6 +42,7 @@
   <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
 
 
+  <script src="<?= base_url('assets') ?>/vendor/jquery/jquery.js"></script>
   <!--[if lt IE 9]>
     <script src="../../assets/vendor/html5shiv/html5shiv.min.js"></script>
     <![endif]-->

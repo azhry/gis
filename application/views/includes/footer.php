@@ -10,7 +10,6 @@
   </footer>
 
   <!-- Core  -->
-  <script src="<?= base_url('assets') ?>/vendor/jquery/jquery.js"></script>
   <script src="<?= base_url('assets') ?>/vendor/bootstrap/bootstrap.js"></script>
   <script src="<?= base_url('assets') ?>/vendor/animsition/jquery.animsition.js"></script>
   <script src="<?= base_url('assets') ?>/vendor/asscroll/jquery-asScroll.js"></script>
@@ -29,6 +28,14 @@
   <script src="<?= base_url('assets') ?>/vendor/gmaps/gmaps.js"></script>
   <script src="<?= base_url('assets') ?>/vendor/matchheight/jquery.matchHeight-min.js"></script>
 
+  <!-- Plugins -->
+
+  <script src="<?= base_url('assets') ?>/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url('assets') ?>/vendor/datatables-fixedheader/dataTables.fixedHeader.js"></script>
+  <script src="<?= base_url('assets') ?>/vendor/datatables-bootstrap/dataTables.bootstrap.js"></script>
+  <script src="<?= base_url('assets') ?>/vendor/datatables-responsive/dataTables.responsive.js"></script>
+  <script src="<?= base_url('assets') ?>/vendor/datatables-tabletools/dataTables.tableTools.js"></script>
+
   <!-- Scripts -->
   <script src="<?= base_url('assets') ?>/js/core.js"></script>
   <script src="<?= base_url('assets') ?>/js/site.js"></script>
@@ -46,6 +53,7 @@
   <script src="<?= base_url('assets') ?>/js/components/switchery.js"></script>
   <script src="<?= base_url('assets') ?>/js/components/gmaps.js"></script>
   <script src="<?= base_url('assets') ?>/js/components/matchheight.js"></script>
+  <script src="<?= base_url('assets') ?>/js/components/datatables.js"></script>
 
   <script>
     $(document).ready(function($) {

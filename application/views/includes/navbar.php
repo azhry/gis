@@ -17,7 +17,7 @@
       </button>
       <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
         <img class="navbar-brand-logo" src="<?= base_url('assets') ?>/images/logo.png" title="Remark">
-        <span class="navbar-brand-text"> Remark</span>
+        <span class="navbar-brand-text"> GIS</span>
       </div>
     </div>
 
