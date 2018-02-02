@@ -2,7 +2,7 @@
   <div class="page animsition">
     <div class="page-header"><!-- 
       <h1 class="page-title">Data Kota</h1> -->
-      <h3 class="page-title">Data Kota</h3>
+      <h3 class="page-title">Detail Kota</h3>
       <ol class="breadcrumb">
         <li><a href="<?= base_url('admin') ?>">Dashborad</a></li>
         <li><a href="<?= base_url('admin/kota') ?>">Data Kota</a></li>
@@ -19,7 +19,75 @@
         </header>
         <div class="panel-body">
             <?= $this->session->flashdata('msg') ?>
-            <div id="map" style="width: 100%; height: 600px;"></div>
+            <!-- <div id="map" style="width: 100%; height: 600px;"></div> -->
+          
+            <div class="row row-lg">
+            <div class="col-md-6">
+              <!-- Example Basic -->
+              <div class="example-wrap">
+                <div class="example table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <th>kl_dat_das</th>
+                        <td><?= $kota->kl_dat_das ?></td>
+                      </tr>
+                      <tr>
+                        <th>Namobj</th>
+                        <td><?= $kota->namobj ?></td>
+                      </tr>
+                      <tr>
+                        <th>Tahun Data</th>
+                        <td><?= $kota->thn_data ?></td>
+                      </tr>
+                      <tr>
+                        <th>Provinsi</th>
+                        <td><?= $kota->provinsi ?></td>
+                      </tr>
+                      <tr>
+                        <th>Kabupaten Kota</th>
+                        <td><?= $kota->kab_kota ?></td>
+                      </tr>
+                      <tr>
+                        <th>Vol</th>
+                        <td><?= $kota->vol ?></td>
+                      </tr>
+                      <tr>
+                        <th>Biaya</th>
+                        <td><?= $kota->biaya ?></td>
+                      </tr>
+                      <tr>
+                        <th>Longitude</th>
+                        <td><?= $kota->longitude ?></td>
+                      </tr>
+                      <tr>
+                        <th>Latitude</th>
+                        <td><?= $kota->latitude ?></td>
+                      </tr>
+                      <tr>
+                        <th>Remarks</th>
+                        <td><?= $kota->remarks ?></td>
+                      </tr>
+                      <tr>
+                        <th>Metadata</th>
+                        <td><?= $kota->metadata ?></td>
+                      </tr>
+                      <tr>
+                        <th>lcode</th>
+                        <td><?= $kota->lcode ?></td>
+                      </tr>
+                      <tr>
+                        <th>fcode</th>
+                        <td><?= $kota->fcode ?></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- End Example Basic -->
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
