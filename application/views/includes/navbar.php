@@ -67,7 +67,7 @@
               </li>
               <li class="divider" role="presentation"></li> -->
               <li role="presentation">
-                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
+                <a href="<?= base_url('Logout') ?>" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
               </li>
             </ul>
           </li>
