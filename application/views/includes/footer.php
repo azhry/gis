@@ -1,6 +1,3 @@
-  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-
-
   <!-- Footer -->
   <footer class="site-footer">
     <span class="site-footer-legal">© 2015 Remark</span>

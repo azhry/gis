@@ -61,5 +61,8 @@
   <script>
     Breakpoints();
   </script>
+
+  <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcsdhzlDXAOHihT8kYUqvxBPhXDv4qtm0"></script>
 </head>
 <body class="dashboard">

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2018 at 04:43 AM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Generation Time: Feb 03, 2018 at 05:13 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -50,6 +50,24 @@ INSERT INTO `jalan` (`id_data`, `nama`, `kelurahan`, `kecamatan`, `tipe`, `kondi
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kabupaten`
+--
+
+CREATE TABLE `kabupaten` (
+  `id_kabupaten` int(11) NOT NULL,
+  `nama` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kabupaten`
+--
+
+INSERT INTO `kabupaten` (`id_kabupaten`, `nama`) VALUES
+(1, 'Bengkulu Selatan');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kota`
 --
 
@@ -58,8 +76,8 @@ CREATE TABLE `kota` (
   `kl_dat_das` varchar(225) NOT NULL,
   `namobj` text NOT NULL,
   `thn_data` int(4) NOT NULL,
-  `provinsi` varchar(225) NOT NULL,
-  `kab_kota` varchar(225) NOT NULL,
+  `id_provinsi` int(11) NOT NULL,
+  `id_kabupaten` int(11) NOT NULL,
   `vol` varchar(100) NOT NULL,
   `biaya` bigint(20) NOT NULL,
   `longitude` double NOT NULL,
@@ -74,8 +92,8 @@ CREATE TABLE `kota` (
 -- Dumping data for table `kota`
 --
 
-INSERT INTO `kota` (`id`, `kl_dat_das`, `namobj`, `thn_data`, `provinsi`, `kab_kota`, `vol`, `biaya`, `longitude`, `latitude`, `remarks`, `metadata`, `lcode`, `fcode`) VALUES
-(1, 'a', 'aaa', 1, 'a', 'a', 'a', 0, 1, 1, 'a', 'a', 'a', 'a');
+INSERT INTO `kota` (`id`, `kl_dat_das`, `namobj`, `thn_data`, `id_provinsi`, `id_kabupaten`, `vol`, `biaya`, `longitude`, `latitude`, `remarks`, `metadata`, `lcode`, `fcode`) VALUES
+(6, 'ekjkewlrj', 'rklterklj', 2018, 1, 1, 'werewj', 342, 107.633056640625, -6.871892962887516, 'krkjekl', 'erkwljwekl', 'elkwrjkl', 'elkrjlewk');
 
 -- --------------------------------------------------------
 
@@ -102,6 +120,24 @@ INSERT INTO `pegawai` (`nip`, `nama`, `jabatan`, `email`, `nomor_hp`, `password`
 ('09021181419007', 'Azhary Arliansyah', 'Adm00n', 'arliansyah_azhary@yahoo.com', '0988', '985fabf8f96dc1c4c306341031569937', '', 'admin'),
 ('09021181520021', 'aaaaaaaa', 'Bukan Adm00n', 'asdasd@gmail.com', '09090', '985fabf8f96dc1c4c306341031569937', '', 'kepala dinas');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `provinsi`
+--
+
+CREATE TABLE `provinsi` (
+  `id_provinsi` int(11) NOT NULL,
+  `nama` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `provinsi`
+--
+
+INSERT INTO `provinsi` (`id_provinsi`, `nama`) VALUES
+(1, 'Bengkulu');
+
 --
 -- Indexes for dumped tables
 --
@@ -113,16 +149,30 @@ ALTER TABLE `jalan`
   ADD PRIMARY KEY (`id_data`);
 
 --
+-- Indexes for table `kabupaten`
+--
+ALTER TABLE `kabupaten`
+  ADD PRIMARY KEY (`id_kabupaten`);
+
+--
 -- Indexes for table `kota`
 --
 ALTER TABLE `kota`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_provinsi` (`id_provinsi`),
+  ADD KEY `id_kabupaten` (`id_kabupaten`);
 
 --
 -- Indexes for table `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`nip`);
+
+--
+-- Indexes for table `provinsi`
+--
+ALTER TABLE `provinsi`
+  ADD PRIMARY KEY (`id_provinsi`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -133,11 +183,36 @@ ALTER TABLE `pegawai`
 --
 ALTER TABLE `jalan`
   MODIFY `id_data` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `kabupaten`
+--
+ALTER TABLE `kabupaten`
+  MODIFY `id_kabupaten` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `kota`
 --
 ALTER TABLE `kota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `provinsi`
+--
+ALTER TABLE `provinsi`
+  MODIFY `id_provinsi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `kota`
+--
+ALTER TABLE `kota`
+  ADD CONSTRAINT `kota_ibfk_1` FOREIGN KEY (`id_provinsi`) REFERENCES `provinsi` (`id_provinsi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `kota_ibfk_2` FOREIGN KEY (`id_kabupaten`) REFERENCES `kabupaten` (`id_kabupaten`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

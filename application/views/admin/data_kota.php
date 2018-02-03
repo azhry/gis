@@ -4,7 +4,7 @@
       <h1 class="page-title">Data Kota</h1> -->
       <h3 class="page-title">Data Kota <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#add"><i class="fa fa-plus"></i></button></h3>
       <ol class="breadcrumb">
-        <li><a href="<?= base_url('admin') ?>">Dashborad</a></li>
+        <li><a href="<?= base_url('admin') ?>">Dashboard</a></li>
         <li class="active">Data Kota</li>
       </ol>
     </div>
@@ -24,12 +24,13 @@
             <thead>
               <tr>
                 <th>No</th>
+                <th>Foto</th>
                 <th>KL_DAT_DAS</th>
                 <th>Namobj</th>
                 <th>Tahun</th>
                 <th>Provinsi</th>
                 <th>Kabupaten</th>
-                <th>Koordinat</th>
+                <!-- <th>Koordinat</th> -->
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -37,12 +38,15 @@
               <?php $i=1; foreach($kota as $row): ?>
                 <tr>
                   <td><?= $i ?></td>
+                  <td>
+                      <img src="<?= base_url('img/' . $row->id . '.jpg') ?>" width="100" height="100" onerror="this.src = 'http://placehold.it/100x100'">
+                  </td>
                   <td><?= $row->kl_dat_das ?></td>
                   <td><?= $row->namobj ?></td>
                   <td><?= $row->thn_data ?></td>
-                  <td><?= $row->provinsi ?></td>
-                  <td><?= $row->kab_kota ?></td>
-                  <td><?= $row->latitude ?>,<?= $row->longitude ?></td>
+                  <td><?= $row->nama_provinsi ?></td>
+                  <td><?= $row->nama_kabupaten ?></td>
+                  <!-- <td><?= $row->latitude ?>,<?= $row->longitude ?></td> -->
                   <td>
                     <center>
                       <a href="<?= base_url('admin/detail-Kota/' . $row->id) ?>" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a>
@@ -66,7 +70,7 @@
 
             <div class="modal fade" tabindex="-1" role="dialog" id="add">
               <div class="modal-dialog" role="document">
-                <?= form_open('admin/kota', ['id' => 'tambah']) ?>
+                <?= form_open_multipart('admin/kota', ['id' => 'tambah']) ?>
                <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -86,12 +90,22 @@
                             <input type="number" class="form-control" name="thn_data" required>
                         </div>
                         <div class="form-group">
-                            <label for="Provinsi">Provinsi<span class="required">*</span></label>
-                            <input type="text" class="form-control" name="provinsi" required>
+                            <label for="id_provinsi">Provinsi<span class="required">*</span></label>
+                            <select class="form-control" name="id_provinsi" required>
+                                <option>Pilih Provinsi</option>
+                                <?php foreach ($provinsi as $row): ?>
+                                    <option value="<?= $row->id_provinsi ?>"><?= $row->nama ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="Kabupaten Kota">Kabupaten Kota<span class="required">*</span></label>
-                            <input type="text" class="form-control" name="kab_kota" required>
+                            <label for="id_kabupaten">Kabupaten Kota<span class="required">*</span></label>
+                            <select class="form-control" name="id_kabupaten" required>
+                                <option>Pilih Kabupaten</option>
+                                <?php foreach ($kabupaten as $row): ?>
+                                    <option value="<?= $row->id_kabupaten ?>"><?= $row->nama ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="Vol">Vol<span class="required">*</span></label>
@@ -102,12 +116,15 @@
                             <input type="text" class="form-control" name="biaya" required>
                         </div>
                         <div class="form-group">
-                            <label for="Longitude">Longitude<span class="required">*</span></label>
-                            <input type="number" class="form-control" name="longitude" required>
+                            <label>Pilih Koordinat Lokasi Proyek</label>
+                            <div class="gmap" id="map-add" style="width: 100%; height: 250px;"></div>
+                            <p>Koordinat: <span id="map-add-latitude"></span>, <span id="map-add-longitude"></span></p>
+                            <input type="hidden" id="map-add-hidden_latitude" name="latitude" required>
+                            <input type="hidden" id="map-add-hidden_longitude" name="longitude" required>
                         </div>
                         <div class="form-group">
-                            <label for="Latitude">Latitude<span class="required">*</span></label>
-                            <input type="number" class="form-control" name="latitude" required>
+                            <label for="foto">Upload Foto Proyek<span class="required">*</span></label>
+                            <input type="file" name="foto">
                         </div>
                         <div class="form-group">
                             <label for="Remarks">Remarks<span class="required">*</span></label>
@@ -125,18 +142,6 @@
                             <label for="fcode">fcode<span class="required">*</span></label>
                             <input type="text" class="form-control" name="fcode" required>
                         </div>
-                        <!-- 
-                        <div class="form-group">
-                          <label>Pilih Koordinat Kota</label>
-                          <div class="gmap" id="map-add" style="width: 100%; height: 250px;"></div>
-                          <p>Koordinat: <span id="map-add-latitude"></span>, <span id="map-add-longitude"></span></p>
-                          <input type="hidden" id="map-add-hidden_latitude" name="latitude" required>
-                          <input type="hidden" id="map-add-hidden_longitude" name="longitude" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="foto">Upload Foto Kota<span class="required">*</span></label>
-                            <input type="file" name="foto">
-                        </div> -->
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -149,7 +154,7 @@
 
             <div class="modal fade" tabindex="-1" role="dialog" id="edit">
               <div class="modal-dialog" role="document">
-                <?= form_open('admin/kota', ['id' => 'edit_data']) ?>
+                <?= form_open_multipart('admin/kota', ['id' => 'edit_data']) ?>
                <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -170,12 +175,12 @@
                             <input type="number" class="form-control" name="thn_data" required id="thn_data">
                         </div>
                         <div class="form-group">
-                            <label for="Provinsi">Provinsi<span class="required">*</span></label>
-                            <input type="text" class="form-control" name="provinsi" required id="provinsi">
+                            <label for="id_provinsi">Provinsi<span class="required">*</span></label>
+                            <div id="id_provinsi"></div>
                         </div>
                         <div class="form-group">
-                            <label for="Kabupaten Kota">Kabupaten Kota<span class="required">*</span></label>
-                            <input type="text" class="form-control" name="kab_kota" required id="kab_kota">
+                            <label for="id_kabupaten">Kabupaten Kota<span class="required">*</span></label>
+                            <div id="id_kabupaten"></div>
                         </div>
                         <div class="form-group">
                             <label for="Vol">Vol<span class="required">*</span></label>
@@ -186,12 +191,18 @@
                             <input type="text" class="form-control" name="biaya" required id="biaya">
                         </div>
                         <div class="form-group">
-                            <label for="Longitude">Longitude<span class="required">*</span></label>
-                            <input type="number" class="form-control" name="longitude" required id="longitude">
+                            <label>Pilih Koordinat Jalan</label>
+                            <div class="gmap" id="map-edit" style="width: 100%; height: 250px;"></div>
+                            <p>Koordinat: <span id="map-edit-latitude"></span>, <span id="map-edit-longitude"></span></p>
+                            <input type="hidden" id="map-edit-hidden_latitude" name="latitude" required>
+                            <input type="hidden" id="map-edit-hidden_longitude" name="longitude" required>
+                        </div>
+                        <div id="img-placeholder">
+                          <img src="<?= base_url('img/150x150.png') ?>" width="150" height="150">
                         </div>
                         <div class="form-group">
-                            <label for="Latitude">Latitude<span class="required">*</span></label>
-                            <input type="number" class="form-control" name="latitude" required id="latitude">
+                            <label for="foto">Upload Foto Proyek<span class="required">*</span></label>
+                            <input type="file" name="foto" id="foto">
                         </div>
                         <div class="form-group">
                             <label for="Remarks">Remarks<span class="required">*</span></label>
@@ -209,24 +220,6 @@
                             <label for="fcode">fcode<span class="required">*</span></label>
                             <input type="text" class="form-control" name="fcode" required id="fcode">
                         </div>
-                        <!-- <div class="form-inline">
-                          <div class="form-group">
-                            <label for="latitude">Latitude<span class="required">*</span></label>
-                            <input type="text" name="latitude" id="latitude" class="form-control" required>
-                          </div>
-                          <div class="form-group">
-                            <label for="longitude">Longitude<span class="required">*</span></label>
-                            <input type="text" name="longitude" id="longitude" class="form-control" required>
-                          </div>
-                        </div> -->
-                        <!-- <br>
-                        <div id="img-placeholder">
-                          <img src="<?= base_url('img/150x150.png') ?>" width="150" height="150">
-                        </div>
-                        <div class="form-group">
-                            <label for="foto">Upload Foto Kota<span class="required">*</span></label>
-                            <input type="file" name="foto" id="foto">
-                        </div> -->
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -266,27 +259,23 @@
                       get: true
                     },
                     success: function(response) {
-                      var json = $.parseJSON(response);
-                      $('#id').val(json.id);
-                      $('#namobj').val(json.namobj);
-                      $('#kl_dat_das').val(json.kl_dat_das);
-                      $('#thn_data').val(json.thn_data);
-                      $('#latitude').val(json.latitude);
-                      $('#longitude').val(json.longitude);
-                      $('#provinsi').val(json.provinsi);
-                      $('#kab_kota').val(json.kab_kota);
-                      $('#vol').val(json.vol);
-                      $('#biaya').val(json.biaya);
-                      $('#remarks').val(json.remarks);
-                      $('#metadata').val(json.metadata);
-                      $('#lcode').val(json.lcode);
-                      $('#fcode').val(json.fcode);
-                      
-                      // $('#tipe').html(json.tipe_Kota);
-                      // $('#kondisi').html(json.kondisi_Kota);
-                      // $('#img-placeholder').html('<img src="<?= base_url('img') ?>/' + json.id_data + '.jpg?' + json.id_data + '" width="150" height="150">');
+                        var json = $.parseJSON(response);
+                        $('#id').val(json.id);
+                        $('#namobj').val(json.namobj);
+                        $('#kl_dat_das').val(json.kl_dat_das);
+                        $('#thn_data').val(json.thn_data);
+                        $('#vol').val(json.vol);
+                        $('#biaya').val(json.biaya);
+                        $('#remarks').val(json.remarks);
+                        $('#metadata').val(json.metadata);
+                        $('#lcode').val(json.lcode);
+                        $('#fcode').val(json.fcode);
 
-                      // editMap('map-edit', json.latitude, json.longitude);
+                        $('#id_provinsi').html(json.dropdown_provinsi);
+                        $('#id_kabupaten').html(json.dropdown_kabupaten);
+                        $('#img-placeholder').html('<img src="<?= base_url('img') ?>/' + json.id + '.jpg?' + json.id + '" width="150" height="150">');
+
+                        editMap('map-edit', json.latitude, json.longitude);
                     },
                     error: function(e) {
                       console.log(e.responseText);

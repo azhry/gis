@@ -152,8 +152,10 @@ class Admin extends MY_Controller
 
 	public function kota()
 	{
+		$this->load->model('provinsi_m');
+		$this->load->model('kabupaten_m');
 		$this->load->model('kota_m');
-		
+
 		if ($this->POST('simpan'))
 		{
 
@@ -161,8 +163,8 @@ class Admin extends MY_Controller
 				'namobj'		=> $this->POST('namobj'),
 				'kl_dat_das'	=> $this->POST('kl_dat_das'),
 				'thn_data'		=> $this->POST('thn_data'),
-				'provinsi'		=> $this->POST('provinsi'),
-				'kab_kota'		=> $this->POST('kab_kota'),
+				'id_provinsi'	=> $this->POST('id_provinsi'),
+				'id_kabupaten'	=> $this->POST('id_kabupaten'),
 				'vol'			=> $this->POST('vol'),
 				'biaya'			=> $this->POST('biaya'),
 				'latitude'		=> $this->POST('latitude'),
@@ -174,7 +176,7 @@ class Admin extends MY_Controller
 			];
 
 			$this->kota_m->insert($this->data['kota']);
-			// $this->upload($this->db->insert_id(), '../img', 'foto');
+			$this->upload($this->db->insert_id(), '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data kota baru berhasil disimpan');
 			redirect('admin/kota');
@@ -187,8 +189,8 @@ class Admin extends MY_Controller
 				'namobj'		=> $this->POST('namobj'),
 				'kl_dat_das'	=> $this->POST('kl_dat_das'),
 				'thn_data'		=> $this->POST('thn_data'),
-				'provinsi'		=> $this->POST('provinsi'),
-				'kab_kota'		=> $this->POST('kab_kota'),
+				'id_provinsi'	=> $this->POST('id_provinsi'),
+				'id_kabupaten'	=> $this->POST('id_kabupaten'),
 				'vol'			=> $this->POST('vol'),
 				'biaya'			=> $this->POST('biaya'),
 				'latitude'		=> $this->POST('latitude'),
@@ -200,7 +202,7 @@ class Admin extends MY_Controller
 			];
 
 			$this->kota_m->update($this->POST('id'), $this->data['kota']);
-			//$this->upload($this->POST('id_data'), '../img', 'foto');
+			$this->upload($this->POST('id'), '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data kota berhasil diedit');
 			redirect('admin/kota');
@@ -210,18 +212,16 @@ class Admin extends MY_Controller
 		if ($this->POST('get') && $this->POST('id'))
 		{
 			$this->data['kota'] = $this->kota_m->get_row(['id' => $this->POST('id')]);
-			// $tipe 		= [
-			// 	'Tanah' => 'Tanah', 
-			// 	'Semen' => 'Semen', 
-			// 	'Aspal' => 'Aspal'
-			// ];
-			// $kondisi	= [
-			// 	'Baik'  => 'Baik', 
-			// 	'Sedang'=> 'Sedang', 
-			// 	'Buruk'	=> 'Buruk'
-			// ];
-			// $this->data['kota']->tipe_kota = form_dropdown('tipe', $tipe, $this->data['kota']->tipe, ['class' => 'form-control']);
-			// $this->data['kota']->kondisi_kota = form_dropdown('kondisi', $kondisi, $this->data['kota']->kondisi, ['class' => 'form-control']);
+			$provinsi 	= $this->provinsi_m->get();
+			$kabupaten 	= $this->kabupaten_m->get();
+			$prov 		= [];
+			$kab 		= [];
+			foreach ($provinsi as $row)
+				$prov[$row->id_provinsi] = $row->nama;
+			foreach ($kabupaten as $row)
+				$kab[$row->id_kabupaten] = $row->nama;
+			$this->data['kota']->dropdown_provinsi = form_dropdown('id_provinsi', $prov, $this->data['kota']->id_provinsi, ['class' => 'form-control']);
+			$this->data['kota']->dropdown_kabupaten = form_dropdown('id_kabupaten', $kab, $this->data['kota']->id_kabupaten, ['class' => 'form-control']);
 			echo json_encode($this->data['kota']);
 			exit;
 		}
@@ -236,9 +236,11 @@ class Admin extends MY_Controller
 			exit;	
 		}
 
-		$this->data['kota']		= $this->kota_m->get_by_order('id', 'DESC');
-		$this->data['title']	= 'Data Kota | ' . $this->title;
-		$this->data['content']	= 'admin/data_kota';
+		$this->data['provinsi']		= $this->provinsi_m->get();
+		$this->data['kabupaten']	= $this->kabupaten_m->get();
+		$this->data['kota']			= $this->kota_m->get_kota();
+		$this->data['title']		= 'Data Kota | ' . $this->title;
+		$this->data['content']		= 'admin/data_kota';
 		$this->template($this->data);	
 	}
 
@@ -253,7 +255,7 @@ class Admin extends MY_Controller
 		}
 
 		$this->load->model('kota_m');
-		$this->data['kota'] = $this->kota_m->get_row(['id' => $this->data['id_data']]);
+		$this->data['kota'] = $this->kota_m->get_row_kota(['id' => $this->data['id_data']]);
 		if (!$this->data['kota'])
 		{
 			$this->flashmsg('<i class="fa fa-warning"></i> Data kota tidak ditemukan', 'danger');
@@ -263,6 +265,15 @@ class Admin extends MY_Controller
 
 		$this->data['title'] 	= 'Detail Kota | ' . $this->title;
 		$this->data['content']	= 'admin/detail_kota';
+		$this->template($this->data);
+	}
+
+	public function peta_proyek()
+	{
+		$this->load->model('kota_m');
+		$this->data['kota']		= $this->kota_m->get_kota();
+		$this->data['title']	= 'Peta Proyek | ' . $this->title;
+		$this->data['content']	= 'admin/peta_proyek';
 		$this->template($this->data);
 	}
 
