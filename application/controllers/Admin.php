@@ -25,10 +25,8 @@ class Admin extends MY_Controller
 
 	public function index()
 	{
-		$this->load->model('jalan_m');
 		$this->load->model('pegawai_m');
 		$this->load->model('kota_m');
-		$this->data['jalan']	= $this->jalan_m->get();
 		$this->data['pegawai']	= $this->pegawai_m->get();
 		$this->data['kota']		= $this->kota_m->get();
 		$this->data['title'] 	= 'Dashboard | ' . $this->title;

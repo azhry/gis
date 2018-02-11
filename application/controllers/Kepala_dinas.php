@@ -24,9 +24,6 @@ class Kepala_dinas extends MY_Controller
 
 	public function index()
 	{
-		$this->load->model('jalan_m');
-		$this->data['jalan']	= $this->jalan_m->get();
-
 		$this->load->model('kota_m');
 		$this->data['kota']		= $this->kota_m->get();
 		$this->data['title'] 	= 'Dashboard | ' . $this->title;
