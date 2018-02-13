@@ -27,8 +27,12 @@ class Admin extends MY_Controller
 	{
 		$this->load->model('pegawai_m');
 		$this->load->model('kota_m');
+		$this->load->model('kabupaten_m');
+		$this->load->model('provinsi_m');
 		$this->data['pegawai']	= $this->pegawai_m->get();
 		$this->data['kota']		= $this->kota_m->get();
+		$this->data['kabupaten']= $this->kabupaten_m->get();
+		$this->data['provinsi']	= $this->provinsi_m->get();
 		$this->data['title'] 	= 'Dashboard | ' . $this->title;
 		$this->data['content']	= 'admin/dashboard';
 		$this->template($this->data);
@@ -368,5 +372,111 @@ class Admin extends MY_Controller
 		$this->data['title']	= 'Detail User | ' . $this->title;
 		$this->data['content']	= 'admin/detail_user';
 		$this->template($this->data);
+	}
+
+	public function provinsi()
+	{
+		$this->load->model('provinsi_m');
+
+		if ($this->POST('simpan'))
+		{
+
+			$this->data['provinsi'] = [
+				'nama'		=> $this->POST('nama')
+			];
+
+			$this->provinsi_m->insert($this->data['provinsi']);
+
+			$this->flashmsg('<i class="fa fa-check"></i> Data provinsi baru berhasil disimpan');
+			redirect('admin/provinsi');
+			exit;
+		}
+
+		if ($this->POST('edit') && $this->POST('id_provinsi'))
+		{
+			$this->data['provinsi'] = [
+				'nama'		=> $this->POST('nama')
+			];
+
+			$this->provinsi_m->update($this->POST('id_provinsi'), $this->data['provinsi']);
+
+			$this->flashmsg('<i class="fa fa-check"></i> Data provinsi berhasil diedit');
+			redirect('admin/provinsi');
+			exit;	
+		}
+
+		if ($this->POST('get') && $this->POST('id_provinsi'))
+		{
+			$this->data['provinsi'] = $this->provinsi_m->get_row(['id_provinsi' => $this->POST('id_provinsi')]);
+			echo json_encode($this->data['provinsi']);
+			exit;
+		}
+
+		if ($this->GET('delete') && $this->GET('id_provinsi'))
+		{
+			$this->data['id_data'] = $this->GET('id_provinsi', true);
+			$this->provinsi_m->delete($this->data['id_data']);
+			$this->flashmsg('<i class="fa fa-trash"></i> Data provinsi berhasil dihapus', 'warning');
+			redirect('admin/provinsi');
+			exit;	
+		}
+
+		$this->data['provinsi']		= $this->provinsi_m->get();
+		$this->data['title']		= 'Data Provinsi | ' . $this->title;
+		$this->data['content']		= 'admin/data_provinsi';
+		$this->template($this->data);	
+	}
+
+	public function kabupaten()
+	{
+		$this->load->model('kabupaten_m');
+
+		if ($this->POST('simpan'))
+		{
+
+			$this->data['kabupaten'] = [
+				'nama'		=> $this->POST('nama')
+			];
+
+			$this->kabupaten_m->insert($this->data['kabupaten']);
+
+			$this->flashmsg('<i class="fa fa-check"></i> Data kabupaten baru berhasil disimpan');
+			redirect('admin/kabupaten');
+			exit;
+		}
+
+		if ($this->POST('edit') && $this->POST('id_kabupaten'))
+		{
+			$this->data['kabupaten'] = [
+				'nama'		=> $this->POST('nama')
+			];
+
+			$this->kabupaten_m->update($this->POST('id_kabupaten'), $this->data['kabupaten']);
+
+			$this->flashmsg('<i class="fa fa-check"></i> Data kabupaten berhasil diedit');
+			redirect('admin/kabupaten');
+			exit;	
+		}
+
+		if ($this->POST('get') && $this->POST('id_kabupaten'))
+		{
+			$this->data['kabupaten'] = $this->kabupaten_m->get_row(['id_kabupaten' => $this->POST('id_kabupaten')]);
+			echo json_encode($this->data['kabupaten']);
+			exit;
+		}
+
+		if ($this->GET('delete') && $this->GET('id_kabupaten'))
+		{
+			$this->data['id_data'] = $this->GET('id_kabupaten', true);
+			$this->kabupaten_m->delete($this->data['id_data']);
+			$this->flashmsg('<i class="fa fa-trash"></i> Data kabupaten berhasil dihapus', 'warning');
+			redirect('admin/kabupaten');
+			exit;	
+		}
+
+		$this->data['kabupaten']		= $this->kabupaten_m->get();
+		$this->data['title']		= 'Data kabupaten | ' . $this->title;
+		$this->data['content']		= 'admin/data_kabupaten';
+		$this->template($this->data);	
 	}
 }

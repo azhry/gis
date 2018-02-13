@@ -36,39 +36,62 @@
                         </blockquote>
                       </div>
                     </div>
-                    <!-- <div class="col-sm-6">
-                      <div class="example">
-                        <blockquote class="blockquote blockquote-info">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                            integer.</p>
-                          <footer>Someone famous in
-                            <cite title="Source Title">Source Title</cite>
-                          </footer>
-                        </blockquote>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
+
+                    <div class="col-sm-3">
                       <div class="example">
                         <blockquote class="blockquote blockquote-warning">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                            integer.</p>
-                          <footer>Someone famous in
-                            <cite title="Source Title">Source Title</cite>
-                          </footer>
+                          <a href="<?= base_url('admin/peta-proyek') ?>"> 
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-book fa-5x" style="font-size: 50px;"></i>
+                                </div>
+                                <div class="col-xs-9 text-right" style="color: black;">
+                                    <div class="huge"><?= count($kota) ?></div>
+                                    <div>Peta Proyek</div>
+                                </div>
+                            </div>
+                          </a>
                         </blockquote>
                       </div>
                     </div>
-                    <div class="col-sm-6">
+
+                    <div class="col-sm-3">
                       <div class="example">
                         <blockquote class="blockquote blockquote-danger">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                            integer.</p>
-                          <footer>Someone famous in
-                            <cite title="Source Title">Source Title</cite>
-                          </footer>
+                          <a href="<?= base_url('admin/provinsi') ?>"> 
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-book fa-5x" style="font-size: 50px;"></i>
+                                </div>
+                                <div class="col-xs-9 text-right" style="color: black;">
+                                    <div class="huge"><?= count($provinsi) ?></div>
+                                    <div>Provinsi</div>
+                                </div>
+                            </div>
+                          </a>
                         </blockquote>
                       </div>
-                    </div>-->
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="example">
+                        <blockquote class="blockquote blockquote-info">
+                          <a href="<?= base_url('admin/kabupaten') ?>"> 
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-book fa-5x" style="font-size: 50px;"></i>
+                                </div>
+                                <div class="col-xs-9 text-right" style="color: black;">
+                                    <div class="huge"><?= count($kabupaten) ?></div>
+                                    <div>Kabupaten</div>
+                                </div>
+                            </div>
+                          </a>
+                        </blockquote>
+                      </div>
+                    </div>
+
+
                   </div> 
                 </div>
                 <!-- End Example Styles -->
