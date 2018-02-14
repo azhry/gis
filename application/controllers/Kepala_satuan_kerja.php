@@ -1,20 +1,20 @@
 <?php 
 
-class Kepala_dinas extends MY_Controller
+class Kepala_satuan_kerja extends MY_Controller
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['nip'] 	= $this->session->userdata('nip');
-		$this->data['role']	= $this->session->userdata('role');
-		if (!isset($this->data['nip'], $this->data['role']))
+		$this->data['nip'] 		= $this->session->userdata('nip');
+		$this->data['id_role']	= $this->session->userdata('id_role');
+		if (!isset($this->data['nip'], $this->data['id_role']))
 		{
 			$this->session->sess_destroy();
 			redirect('login');
 			exit;
 		}
 
-		if ($this->data['role'] != 'kepala dinas')
+		if ($this->data['id_role'] != 2)
 		{
 			$this->session->sess_destroy();
 			redirect('login');
@@ -24,38 +24,18 @@ class Kepala_dinas extends MY_Controller
 
 	public function index()
 	{
-		$this->load->model('kota_m');
-		$this->data['kota']		= $this->kota_m->get();
+		$this->load->model('proyek_m');
+		$this->data['kota']		= $this->proyek_m->get();
 		$this->data['title'] 	= 'Dashboard | ' . $this->title;
-		$this->data['content']	= 'kepala_dinas/dashboard';
+		$this->data['content']	= 'kepala_satuan_kerja/dashboard';
 		$this->template($this->data);
-	}
-
-	public function jalan()
-	{
-		$this->load->model('jalan_m');
-		$this->data['jalan']	= $this->jalan_m->get_by_order('id_data', 'DESC');
-		$this->data['title']	= 'Data Jalan | ' . $this->title;
-		$this->data['content']	= 'kepala_dinas/data_jalan';
-		$this->template($this->data);	
-	}
-
-	public function unduh_laporan_jalan()
-	{
-		$this->load->model('jalan_m');
-		$this->data['jalan'] = $this->jalan_m->get_by_order('id_data', 'DESC');
-		$html = $this->load->view('kepala_dinas/laporan_jalan', $this->data, true);
-		$file_name = date('YmdHis') . ' - Laporan Jalan.pdf';
-		$this->load->library('m_pdf');
-		$this->m_pdf->pdf->WriteHTML($html);
-		$this->m_pdf->pdf->Output($file_name, 'D');
 	}
 
 	public function kota()
 	{
 		$this->load->model('provinsi_m');
 		$this->load->model('kabupaten_m');
-		$this->load->model('kota_m');
+		$this->load->model('proyek_m');
 
 		if ($this->POST('simpan'))
 		{
@@ -76,11 +56,11 @@ class Kepala_dinas extends MY_Controller
 				'fcode'			=> $this->POST('fcode')
 			];
 
-			$this->kota_m->insert($this->data['kota']);
+			$this->proyek_m->insert($this->data['kota']);
 			$this->upload($this->db->insert_id(), '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data kota baru berhasil disimpan');
-			redirect('kepala_dinas/kota');
+			redirect('kepala_satuan_kerja/kota');
 			exit;
 		}
 
@@ -102,17 +82,17 @@ class Kepala_dinas extends MY_Controller
 				'fcode'			=> $this->POST('fcode')
 			];
 
-			$this->kota_m->update($this->POST('id'), $this->data['kota']);
+			$this->proyek_m->update($this->POST('id'), $this->data['kota']);
 			$this->upload($this->POST('id'), '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data kota berhasil diedit');
-			redirect('kepala_dinas/kota');
+			redirect('kepala_satuan_kerja/kota');
 			exit;	
 		}
 
 		if ($this->POST('get') && $this->POST('id'))
 		{
-			$this->data['kota'] = $this->kota_m->get_row(['id' => $this->POST('id')]);
+			$this->data['kota'] = $this->proyek_m->get_row(['id' => $this->POST('id')]);
 			$provinsi 	= $this->provinsi_m->get();
 			$kabupaten 	= $this->kabupaten_m->get();
 			$prov 		= [];
@@ -130,18 +110,18 @@ class Kepala_dinas extends MY_Controller
 		if ($this->GET('delete') && $this->GET('id'))
 		{
 			$this->data['id_data'] = $this->GET('id', true);
-			$this->kota_m->delete($this->data['id_data']);
+			$this->proyek_m->delete($this->data['id_data']);
 			@unlink(realpath(APPPATH . '../img/' . $this->data['id_data'] . '.jpg'));
 			$this->flashmsg('<i class="fa fa-trash"></i> Data kota berhasil dihapus', 'warning');
-			redirect('kepala_dinas/kota');
+			redirect('kepala_satuan_kerja/kota');
 			exit;	
 		}
 
 		$this->data['provinsi']		= $this->provinsi_m->get();
 		$this->data['kabupaten']	= $this->kabupaten_m->get();
-		$this->data['kota']			= $this->kota_m->get_kota();
+		$this->data['kota']			= $this->proyek_m->get_proyek();
 		$this->data['title']		= 'Data Kota | ' . $this->title;
-		$this->data['content']		= 'kepala_dinas/data_kota';
+		$this->data['content']		= 'kepala_satuan_kerja/data_kota';
 		$this->template($this->data);	
 	}
 
@@ -151,30 +131,30 @@ class Kepala_dinas extends MY_Controller
 		if (!isset($this->data['id_data']))
 		{
 			$this->flashmsg('<i class="fa fa-warning"></i> Required parameters are missing', 'danger');
-			redirect('kepala_dinas/kota');
+			redirect('kepala_satuan_kerja/kota');
 			exit;
 		}
 
-		$this->load->model('kota_m');
-		$this->data['kota'] = $this->kota_m->get_row_kota(['id' => $this->data['id_data']]);
+		$this->load->model('proyek_m');
+		$this->data['kota'] = $this->proyek_m->get_row_proyek(['id' => $this->data['id_data']]);
 		if (!$this->data['kota'])
 		{
 			$this->flashmsg('<i class="fa fa-warning"></i> Data kota tidak ditemukan', 'danger');
-			redirect('kepala_dinas/kota');
+			redirect('kepala_satuan_kerja/kota');
 			exit;
 		}
 
 		$this->data['title'] 	= 'Detail Kota | ' . $this->title;
-		$this->data['content']	= 'kepala_dinas/detail_kota';
+		$this->data['content']	= 'kepala_satuan_kerja/detail_kota';
 		$this->template($this->data);
 	}
 
 	public function peta_proyek()
 	{
-		$this->load->model('kota_m');
-		$this->data['kota']		= $this->kota_m->get_kota();
+		$this->load->model('proyek_m');
+		$this->data['proyek']	= $this->proyek_m->get_proyek();
 		$this->data['title']	= 'Peta Proyek | ' . $this->title;
-		$this->data['content']	= 'kepala_dinas/peta_proyek';
+		$this->data['content']	= 'kepala_satuan_kerja/peta_proyek';
 		$this->template($this->data);
 	}
 

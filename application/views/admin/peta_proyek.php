@@ -33,7 +33,7 @@
             center: coordinate
         });
 
-        <?php foreach ($kota as $row): ?>
+        <?php foreach ($proyek as $row): ?>
             var marker_<?= $row->id ?> = new google.maps.Marker({
                 position: {lat: <?= $row->latitude ?>, lng: <?= $row->longitude ?>},
                 map: map

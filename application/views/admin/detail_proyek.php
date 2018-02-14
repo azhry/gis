@@ -1,12 +1,11 @@
 <!-- Page -->
 <div class="page animsition">
-    <div class="page-header"><!--
-        <h1 class="page-title">Data Kota</h1> -->
-        <h3 class="page-title">Detail Kota</h3>
+    <div class="page-header">
+        <h3 class="page-title">Detail Proyek</h3>
         <ol class="breadcrumb">
             <li><a href="<?= base_url('admin') ?>">Dashboard</a></li>
-            <li><a href="<?= base_url('admin/kota') ?>">Data Kota</a></li>
-            <li class="active">Detail Kota</li>
+            <li><a href="<?= base_url('admin/proyek') ?>">Data Proyek</a></li>
+            <li class="active">Detail Proyek</li>
         </ol>
     </div>
     <div class="page-content">
@@ -14,7 +13,7 @@
         <div class="panel">
             <header class="panel-heading">
                 <div class="panel-actions"></div>
-                <h3 class="panel-title">Detail Kota</h3>
+                <h3 class="panel-title">Detail Proyek</h3>
             </header>
             <div class="panel-body">
                 <?= $this->session->flashdata('msg') ?>
@@ -23,7 +22,7 @@
                 <div class="row row-lg">
                     <div class="col-md-4">
                         <center>
-                            <img src="<?= base_url('img/' . $kota->id . '.jpg') ?>" class="img-thumbnail" width="200" height="200">
+                            <img src="<?= base_url('img/' . $proyek->id . '.jpg') ?>" class="img-thumbnail" width="200" height="200">
                         </center>
                     </div>
                     <div class="col-md-8">
@@ -34,55 +33,39 @@
                                     <tbody>
                                         <tr>
                                             <th>kl_dat_das</th>
-                                            <td><?= $kota->kl_dat_das ?></td>
+                                            <td><?= $proyek->kl_dat_das ?></td>
                                         </tr>
                                         <tr>
                                             <th>Namobj</th>
-                                            <td><?= $kota->namobj ?></td>
+                                            <td><?= $proyek->namobj ?></td>
                                         </tr>
                                         <tr>
                                             <th>Tahun Data</th>
-                                            <td><?= $kota->thn_data ?></td>
+                                            <td><?= $proyek->thn_data ?></td>
                                         </tr>
                                         <tr>
                                             <th>Provinsi</th>
-                                            <td><?= $kota->nama_provinsi ?></td>
+                                            <td><?= $proyek->nama_provinsi ?></td>
                                         </tr>
                                         <tr>
-                                            <th>Kabupaten Kota</th>
-                                            <td><?= $kota->nama_kabupaten ?></td>
+                                            <th>Kabupaten</th>
+                                            <td><?= $proyek->nama_kabupaten ?></td>
                                         </tr>
                                         <tr>
                                             <th>Vol</th>
-                                            <td><?= $kota->vol ?></td>
+                                            <td><?= $proyek->vol ?></td>
                                         </tr>
                                         <tr>
                                             <th>Biaya</th>
-                                            <td><?= $kota->biaya ?></td>
+                                            <td><?= $proyek->biaya ?></td>
                                         </tr>
                                         <tr>
                                             <th>Longitude</th>
-                                            <td><?= $kota->longitude ?></td>
+                                            <td><?= $proyek->longitude ?></td>
                                         </tr>
                                         <tr>
                                             <th>Latitude</th>
-                                            <td><?= $kota->latitude ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Remarks</th>
-                                            <td><?= $kota->remarks ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Metadata</th>
-                                            <td><?= $kota->metadata ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>lcode</th>
-                                            <td><?= $kota->lcode ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>fcode</th>
-                                            <td><?= $kota->fcode ?></td>
+                                            <td><?= $proyek->latitude ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -102,9 +85,9 @@
     });
 
     function initMap() {
-      var coordinate = {lat: <?= $kota->latitude ?>, lng: <?= $kota->longitude ?>};
+      var coordinate = {lat: <?= $proyek->latitude ?>, lng: <?= $proyek->longitude ?>};
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
+        zoom: 12,
         center: coordinate
       });
 
@@ -116,10 +99,10 @@
       var contentString = '<div id="content">'+
         '<div id="siteNotice">'+
         '</div>'+
-        '<h5 id="firstHeading" class="firstHeading"><?= $kota->kl_dat_das ?></h5>'+
+        '<h5 id="firstHeading" class="firstHeading"><?= $proyek->kl_dat_das ?></h5>'+
         '<div id="bodyContent">'+
-        '<p><?= $kota->namobj ?></p>'+
-        '<img width="100" height="100" src="<?= base_url('img/' . $kota->id . '.jpg') ?>" />'+
+        '<p><?= $proyek->namobj ?></p>'+
+        '<img width="100" height="100" src="<?= base_url('img/' . $proyek->id . '.jpg') ?>" />'+
         '</div>'+
         '</div>';
       var infoWindow = new google.maps.InfoWindow({

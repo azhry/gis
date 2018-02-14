@@ -1,15 +1,15 @@
 <?php 
 
-class Kota_m extends MY_Model 
+class Proyek_m extends MY_Model 
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['table_name']	= 'kota';
+		$this->data['table_name']	= 'proyek';
 		$this->data['primary_key']	= 'id';
 	}
 
-	public function get_kota($cond = '')
+	public function get_proyek($cond = '')
 	{
 		if ((is_array($cond) && count($cond) > 0) or (is_string($cond) && strlen($cond) >= 3))
 			$this->db->where($cond);
@@ -22,7 +22,7 @@ class Kota_m extends MY_Model
 		return $query->result();
 	}
 
-	public function get_row_kota($cond = '')
+	public function get_row_proyek($cond = '')
 	{
 		if ((is_array($cond) && count($cond) > 0) or (is_string($cond) && strlen($cond) >= 3))
 			$this->db->where($cond);

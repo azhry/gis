@@ -17,8 +17,8 @@ class Login_m extends MY_Model
 		if ($pegawai)
 		{
 			$this->session->set_userdata([
-				'nip'	=> $pegawai->nip,
-				'role'	=> $pegawai->role
+				'nip'		=> $pegawai->nip,
+				'id_role'	=> $pegawai->id_role
 			]);
 		}
 		return $pegawai;
