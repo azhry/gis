@@ -30,7 +30,7 @@ class Admin extends MY_Controller
 		$this->load->model('kabupaten_m');
 		$this->load->model('provinsi_m');
 		$this->data['pegawai']	= $this->pegawai_m->get();
-		$this->data['kota']		= $this->proyek_m->get();
+		$this->data['proyek']	= $this->proyek_m->get();
 		$this->data['kabupaten']= $this->kabupaten_m->get();
 		$this->data['provinsi']	= $this->provinsi_m->get();
 		$this->data['title'] 	= 'Dashboard | ' . $this->title;
@@ -38,14 +38,129 @@ class Admin extends MY_Controller
 		$this->template($this->data);
 	}
 
-	public function map()
-	{
-		$this->load->model('jalan_m');
-		$this->load->model('pegawai_m');
-		$this->data['jalan']	= $this->jalan_m->get();
+	public function pegawai() {
+
+		$this->load->model( 'pegawai_m' );
+
+		if ($this->GET('delete') && $this->GET('nip'))
+		{
+			$this->data['nip'] = $this->GET('nip', true);
+			$this->pegawai_m->delete($this->data['nip']);
+			$this->flashmsg('<i class="fa fa-trash"></i> Data pegawai berhasil dihapus', 'warning');
+			redirect('admin/pegawai');
+			exit;	
+		}
+
 		$this->data['pegawai']	= $this->pegawai_m->get();
-		$this->data['title'] 	= 'Dashboard | ' . $this->title;
-		$this->data['content']	= 'admin/map';
+		$this->data['title']	= 'Data Pegawai | ' . $this->title;
+		$this->data['content']	= 'admin/data_pegawai';
+		$this->template( $this->data, 'admin' );
+
+	}
+
+	public function tambah_pegawai() {
+
+		$this->load->model( 'pegawai_m' );
+		$this->load->model( 'role_m' );
+
+		if ( $this->POST( 'submit' ) ) {
+
+			$this->data['pegawai'] = [
+				'nip'		=> $this->POST( 'nip' ),
+				'nama'		=> $this->POST( 'nama' ),
+				'jabatan'	=> $this->POST( 'jabatan' ),
+				'email'		=> $this->POST( 'email' ),
+				'nomor_hp'	=> $this->POST( 'nomor_hp' ),
+				'password'	=> md5( $this->POST( 'password' ) ),
+				'id_role'	=> $this->POST( 'id_role' )
+			];
+
+			$this->pegawai_m->insert( $this->data['pegawai'] );
+			$this->flashmsg( 'Data berhasil disimpan' );
+			redirect( 'admin/pegawai' );
+			exit;
+
+		}
+
+		$this->data['role']		= $this->role_m->get();
+		$this->data['title']	= 'Tambah Pegawai | ' . $this->title;
+		$this->data['content']	= 'admin/tambah_pegawai';
+		$this->template( $this->data, 'admin' );
+
+	}
+
+	public function edit_pegawai() {
+
+		$this->data['nip']	= $this->uri->segment( 3 );
+		if ( !isset( $this->data['nip'] ) ) {
+
+			$this->flashmsg( 'Required parameter is missing', 'danger' );
+			redirect( 'admin/pegawai' );
+			exit;
+
+		}
+
+		$this->load->model( 'pegawai_m' );
+		$this->data['pegawai']	= $this->pegawai_m->get_row([ 'nip' => $this->data['nip'] ]);
+		if ( !isset( $this->data['pegawai'] ) ) {
+
+			$this->flashmsg( 'Data tidak ditemukan', 'danger' );
+			redirect( 'admin/pegawai' );
+			exit;			
+
+		}
+
+		$this->load->model( 'role_m' );
+
+		if ( $this->POST( 'submit' ) ) {
+
+			$this->data['pegawai'] = [
+				'nip'		=> $this->POST( 'nip' ),
+				'nama'		=> $this->POST( 'nama' ),
+				'jabatan'	=> $this->POST( 'jabatan' ),
+				'email'		=> $this->POST( 'email' ),
+				'nomor_hp'	=> $this->POST( 'nomor_hp' ),
+				'id_role'	=> $this->POST( 'id_role' )
+			];
+
+			$password = $this->POST( 'password' );
+			if ( !empty( $password ) ) $this->data['pegawai']['password'] = md5( $password );
+
+			$this->pegawai_m->update( $this->data['nip'], $this->data['pegawai'] );
+			$this->flashmsg( 'Data berhasil diedit' );
+			redirect( 'admin/edit-pegawai/' . $this->POST( 'nip' ) );
+			exit;
+
+		}
+
+		$this->data['role']		= $this->role_m->get();
+		$this->data['title']	= 'Edit Pegawai | ' . $this->title;
+		$this->data['content']	= 'admin/edit_pegawai';
+		$this->template( $this->data, 'admin' );
+
+	}
+
+	public function detail_pegawai()
+	{
+		$this->data['nip'] = $this->uri->segment(3);
+		if (!isset($this->data['nip']))
+		{
+			$this->flashmsg('<i class="fa fa-warning"></i> Required parameters are missing', 'danger');
+			redirect('admin/pegawai');
+			exit;
+		}
+
+		$this->load->model('pegawai_m');
+		$this->data['pegawai'] = $this->pegawai_m->get_row(['nip' => $this->data['nip']]);
+		if (!isset($this->data['pegawai']))
+		{
+			$this->flashmsg('<i class="fa fa-warning"></i> Data pegawai tidak ditemukan', 'danger');
+			redirect('admin/pegawai');
+			exit;	
+		}
+
+		$this->data['title']	= 'Detail Pegawai | ' . $this->title;
+		$this->data['content']	= 'admin/detail_pegawai';
 		$this->template($this->data);
 	}
 
@@ -192,101 +307,6 @@ class Admin extends MY_Controller
 		$this->data['proyek']	= $this->proyek_m->get_proyek();
 		$this->data['title']	= 'Peta Proyek | ' . $this->title;
 		$this->data['content']	= 'admin/peta_proyek';
-		$this->template($this->data);
-	}
-
-	public function user()
-	{
-		$this->load->model('pegawai_m');
-		
-		if ($this->POST('simpan'))
-		{
-			$this->data['user'] = [
-				'nip'			=> $this->POST('nip'),
-				'nama'			=> $this->POST('nama'),
-				'jabatan'		=> $this->POST('jabatan'),
-				'email'			=> $this->POST('email'),
-				'nomor_hp'		=> $this->POST('nomor_hp'),
-				'password'		=> md5($this->POST('password')),
-				'role'			=> $this->POST('role')
-			];
-
-			$this->pegawai_m->insert($this->data['user']);
-
-			$this->flashmsg('<i class="fa fa-check"></i> Data user baru berhasil disimpan');
-			redirect('admin/user');
-			exit;
-		}
-
-		if ($this->POST('edit') && $this->POST('nip_pk'))
-		{
-			$password = $this->POST('password');
-
-			$this->data['user'] = [
-				'nip'			=> $this->POST('nip'),
-				'nama'			=> $this->POST('nama'),
-				'jabatan'		=> $this->POST('jabatan'),
-				'email'			=> $this->POST('email'),
-				'nomor_hp'		=> $this->POST('nomor_hp'),
-				'role'			=> $this->POST('role')
-			];
-
-			if (!empty($password)) $this->data['user']['password'] = md5($password);
-
-			$this->pegawai_m->update($this->POST('nip_pk'), $this->data['user']);
-			$this->flashmsg('<i class="fa fa-check"></i> Data user berhasil diedit');
-			redirect('admin/user');
-			exit;	
-		}
-
-		if ($this->POST('get') && $this->POST('nip'))
-		{
-			$this->data['user'] = $this->pegawai_m->get_row(['nip' => $this->POST('nip')]);
-			$role = [
-				'admin'			=> 'Admin',
-				'kepala dinas'	=> 'Kepala Dinas'
-			];
-			$this->data['user']->dropdown = form_dropdown('role', $role, $this->data['user']->role, ['id' => 'role', 'class' => 'form-control']);
-			echo json_encode($this->data['user']);
-			exit;
-		}
-
-		if ($this->GET('delete') && $this->GET('id'))
-		{
-			$this->data['nip'] = $this->GET('id', true);
-			$this->pegawai_m->delete($this->data['nip']);
-			$this->flashmsg('<i class="fa fa-trash"></i> Data user berhasil dihapus', 'warning');
-			redirect('admin/user');
-			exit;	
-		}
-
-		$this->data['pegawai']	= $this->pegawai_m->get_by_order('nama', 'ASC');
-		$this->data['title']	= 'Data User | ' . $this->title;
-		$this->data['content']	= 'admin/data_user';
-		$this->template($this->data);
-	}
-
-	public function detail_user()
-	{
-		$this->data['nip'] = $this->uri->segment(3);
-		if (!isset($this->data['nip']))
-		{
-			$this->flashmsg('<i class="fa fa-warning"></i> Required parameters are missing', 'danger');
-			redirect('admin/user');
-			exit;
-		}
-
-		$this->load->model('pegawai_m');
-		$this->data['pegawai'] = $this->pegawai_m->get_row(['nip' => $this->data['nip']]);
-		if (!isset($this->data['pegawai']))
-		{
-			$this->flashmsg('<i class="fa fa-warning"></i> Data pegawai tidak ditemukan', 'danger');
-			redirect('admin/user');
-			exit;	
-		}
-
-		$this->data['title']	= 'Detail User | ' . $this->title;
-		$this->data['content']	= 'admin/detail_user';
 		$this->template($this->data);
 	}
 

@@ -17,6 +17,12 @@
                         </a>
                     </li>
                     <li class="site-menu-item">
+                        <a href="<?= base_url('admin/pegawai') ?>" data-slug="dashboard">
+                            <i class="site-menu-icon fa fa-book" aria-hidden="true"></i>
+                            <span class="site-menu-title">Data Pegawai</span>
+                        </a>
+                    </li>
+                    <li class="site-menu-item">
                         <a href="<?= base_url('admin/peta-proyek') ?>" data-slug="dashboard">
                             <i class="site-menu-icon fa fa-book" aria-hidden="true"></i>
                             <span class="site-menu-title">Peta Proyek</span>

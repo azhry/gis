@@ -22,14 +22,14 @@
                     <div class="col-sm-3">
                       <div class="example">
                         <blockquote class="blockquote blockquote-success">
-                          <a href="<?= base_url('admin/kota') ?>"> 
+                          <a href="<?= base_url('admin/proyek') ?>"> 
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-user fa-5x" style="font-size: 50px;"></i>
+                                    <i class="fa fa-book fa-5x" style="font-size: 50px;"></i>
                                 </div>
                                 <div class="col-xs-9 text-right" style="color: black;">
-                                    <div class="huge"><?= count($kota) ?></div>
-                                    <div>Kota</div>
+                                    <div class="huge"><?= count($proyek) ?></div>
+                                    <div>Proyek</div>
                                 </div>
                             </div>
                           </a>
@@ -46,7 +46,7 @@
                                     <i class="fa fa-book fa-5x" style="font-size: 50px;"></i>
                                 </div>
                                 <div class="col-xs-9 text-right" style="color: black;">
-                                    <div class="huge"><?= count($kota) ?></div>
+                                    <div class="huge"><?= count($proyek) ?></div>
                                     <div>Peta Proyek</div>
                                 </div>
                             </div>
@@ -84,6 +84,24 @@
                                 <div class="col-xs-9 text-right" style="color: black;">
                                     <div class="huge"><?= count($kabupaten) ?></div>
                                     <div>Kabupaten</div>
+                                </div>
+                            </div>
+                          </a>
+                        </blockquote>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                      <div class="example">
+                        <blockquote class="blockquote blockquote-default">
+                          <a href="<?= base_url('admin/pegawai') ?>"> 
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-users fa-5x" style="font-size: 50px;"></i>
+                                </div>
+                                <div class="col-xs-9 text-right" style="color: black;">
+                                    <div class="huge"><?= count($pegawai) ?></div>
+                                    <div>Pegawai</div>
                                 </div>
                             </div>
                           </a>
