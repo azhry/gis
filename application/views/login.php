@@ -61,8 +61,9 @@
   data-animsition-out="fade-out">>
     <div class="page-content vertical-align-middle">
       <div class="brand">
-        <img class="brand-img" src="<?= base_url('assets') ?>/images/logo.png" alt="...">
-        <h2 class="brand-text">GIS</h2>
+        <img class="brand-img" src="<?= base_url('img') ?>/logo.jpg" alt="KemenPUPR" width="100" height="100">
+        <h2 class="brand-text">Sistem Informasi Geografis</h2>
+        <p>Kementrian Pekerjaan Umum dan Perumahan Rakyat</p>
       </div>
       <p>Login into your account.</p>
       <?= form_open('login/login_process') ?>

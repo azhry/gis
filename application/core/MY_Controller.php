@@ -2,7 +2,7 @@
 
 class MY_Controller extends CI_Controller
 {
-  	public $title = 'GIS';
+  	public $title = 'Sistem Informasi Geografis';
 	
 	public function __construct()
 	{

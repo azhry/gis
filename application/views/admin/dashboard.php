@@ -18,6 +18,25 @@
                   <h4 class="example-title">Styles</h4>
                   <p>Use any of the available blockquote classes to quickly create a
                     styled button.</p> -->
+                    <div class="row row-lg">
+                        <div class="col-md-3">
+                            <center>
+                                <img src="<?= base_url( 'img/logo2.jpg' ) ?>" width="150" height="100">
+                            </center>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="text-center">
+                                Direktorat Jendral Cipta Karya<br>
+                                Kementrian Pekerjaan Umum dan Perumahan Rakyat
+                            </h3>
+                            <h3 class="text-center"></h3>
+                        </div>
+                        <div class="col-md-3">
+                            <center>
+                                <img src="<?= base_url( 'img/logo.jpg' ) ?>" width="100" height="100">
+                            </center>
+                        </div>
+                    </div>
                   <div class="row row-lg">
                     <div class="col-sm-3">
                       <div class="example">
