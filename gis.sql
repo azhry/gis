@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2018 at 03:42 AM
+-- Generation Time: Feb 25, 2018 at 02:45 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -98,17 +98,20 @@ CREATE TABLE `proyek` (
   `vol` varchar(100) NOT NULL,
   `biaya` bigint(20) NOT NULL,
   `longitude` double NOT NULL,
-  `latitude` double NOT NULL
+  `latitude` double NOT NULL,
+  `persentase_penyelesaian` float NOT NULL DEFAULT '0',
+  `tanggal_selesai` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `proyek`
 --
 
-INSERT INTO `proyek` (`id`, `kl_dat_das`, `namobj`, `thn_data`, `id_provinsi`, `id_kabupaten`, `vol`, `biaya`, `longitude`, `latitude`) VALUES
-(6, 'ekjkewlrj', 'rklterklj', 2018, 1, 1, 'werewj', 342, 107.633056640625, -6.871892962887516),
-(7, 'hehe', 'Hehe', 2020, 1, 1, 'Hehe', 324, 104.7711181640625, -2.9869273933348635),
-(8, 'Bengkulu Selatan', 'Pembangunan Drainase Volume = 838 M dan Pekerjaan Bak Kontrol dan Kotak Sampah , Volume = 7 Unit, Kelurahan Kota Medan Kecamtan Kota Manna,', 2017, 1, 1, '6 ds/KEL', 500000000, 104.05803680419922, -5.069057826784033);
+INSERT INTO `proyek` (`id`, `kl_dat_das`, `namobj`, `thn_data`, `id_provinsi`, `id_kabupaten`, `vol`, `biaya`, `longitude`, `latitude`, `persentase_penyelesaian`, `tanggal_selesai`) VALUES
+(6, 'ekjkewlrj', 'rklterklj', 2018, 1, 1, 'werewj', 342, 107.633056640625, -6.871892962887516, 0, '2018-02-25 12:13:13'),
+(7, 'hehe', 'Hehe', 2020, 1, 1, 'Hehe', 324, 104.7711181640625, -2.9869273933348635, 0, '2018-02-25 12:13:13'),
+(8, 'Bengkulu Selatan', 'Pembangunan Drainase Volume = 838 M dan Pekerjaan Bak Kontrol dan Kotak Sampah , Volume = 7 Unit, Kelurahan Kota Medan Kecamtan Kota Manna,', 2017, 1, 1, '6 ds/KEL', 500000000, 104.05803680419922, -5.069057826784033, 0, '2018-02-25 12:13:13'),
+(9, 'Test', 'Test', 2018, 1, 1, '2', 22222222, 102.33730425976569, -3.8526230974660423, 67, '2018-07-27 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -186,7 +189,7 @@ ALTER TABLE `provinsi`
 -- AUTO_INCREMENT for table `proyek`
 --
 ALTER TABLE `proyek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `role`

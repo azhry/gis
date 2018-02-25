@@ -126,7 +126,16 @@
                                             '<td><strong>Dana</strong></td>' +
                                             '<td><?= 'Rp ' . number_format($row->biaya, 0, ',', '.') ?></td>' +
                                         '</tr>' +
+                                        '<tr>' +
+                                            '<td><strong>Akan selesai dalam</strong></td>' +
+                                            '<td><?php $waktu = explode(" ", $row->tanggal_selesai);if ( count( $waktu ) > 1 ) {$selesai = new DateTime($waktu[0]);$sekarang = new DateTime(date('Y-m-d'));if ( $sekarang > $selesai ) {echo '0';} else {echo $selesai->diff( $sekarang )->format( '%m bulan' );}}?></td>' +
+                                        '</tr>' +
                                     '</table>' +
+                                    '<div class="progress">' +
+                                        '<div class="progress-bar" role="progressbar" aria-valuenow="<?= $row->persentase_penyelesaian ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $row->persentase_penyelesaian ?>%">' +
+                                            '<?= $row->persentase_penyelesaian ?>%' +
+                                        '</div>' +
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>'

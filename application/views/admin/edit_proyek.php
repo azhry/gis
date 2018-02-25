@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="<?= base_url( 'assets/vendor/bootstrap-datepicker/bootstrap-datepicker.min.css' ) ?>">
+
 <!-- Page -->
 <div class="page animsition">
     <div class="page-header">
@@ -61,6 +63,15 @@
                                 Latitude: <input class="form-control" type="text" id="map-add-hidden_latitude" name="latitude" value="<?= $proyek->latitude ?>" required><br>
                                 Longitude: <input class="form-control" type="text" id="map-add-hidden_longitude" value="<?= $proyek->longitude ?>" name="longitude" required>
                             </div>
+                            <div class="form-group">
+                                <label for="persentase_penyelesaian">Persentase Penyelesaian</label>
+                                <input type="number" class="form-control" value="<?= $proyek->persentase_penyelesaian ?>" required name="persentase_penyelesaian" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <?php $waktu = explode(' ', $proyek->tanggal_selesai); ?>
+                                <label for="tanggal_selesai">Tanggal Selesai</label>
+                                <input data-plugin="datepicker" value="<?= count($waktu) > 1 ? $waktu[0] : '-'  ?>" type="text" class="datepicker form-control" required name="tanggal_selesai">
+                            </div>
                             <div id="img-placeholder">
                                 <img src="<?= base_url( 'img/' . $proyek->id . '.jpg' ) ?>" onerror="this.src = '<?= base_url('img/150x150.png') ?>'" width="150" height="150">
                             </div>
@@ -82,9 +93,32 @@
 </div>
 <!-- End Page -->
 
+<script type="text/javascript" src="<?= base_url( 'assets/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js' ) ?>"></script>
 <script type="text/javascript">
+    var coordinate = {lat: <?= $proyek->latitude ?>, lng: <?= $proyek->longitude ?>};
+    var map = new google.maps.Map(document.getElementById('map-add'), {
+        zoom: 8,
+        center: coordinate
+    });
+    var marker = new google.maps.Marker({
+        position: coordinate,
+        map: map
+    });
+
     $( document ).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
         initMap( 'map-add' );
+
+        $( '#map-add-hidden_latitude, #map-add-hidden_longitude' ).keypress(function() {
+            var lat = $( '#map-add-hidden_latitude' ).val();
+            var lng = $( '#map-add-hidden_longitude' ).val();
+
+            var latLng = new google.maps.LatLng( lat, lng );
+            marker.setPosition( latLng );
+            map.setCenter( latLng );
+        });
     });
 
     function initMap(id) {
@@ -92,20 +126,12 @@
         $('#' + id + '-longitude').text('');
         $('#' + id + '-hidden_latitude').val(<?= $proyek->latitude ?>);
         $('#' + id + '-hidden_longitude').val(<?= $proyek->longitude ?>);
-        var coordinate = {lat: <?= $proyek->latitude ?>, lng: <?= $proyek->longitude ?>};
-        var map = new google.maps.Map(document.getElementById(id), {
-            zoom: 8,
-            center: coordinate
-        });
-        var marker = new google.maps.Marker({
-            position: coordinate,
-            map: map
-        });
+        
         google.maps.event.addListener(map, 'click', function(event){
-        var latLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-        marker.setPosition(latLng);
-        $('#' + id + '-hidden_latitude').val(event.latLng.lat());
-        $('#' + id + '-hidden_longitude').val(event.latLng.lng());
+            var latLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            marker.setPosition(latLng);
+            $('#' + id + '-hidden_latitude').val(event.latLng.lat());
+            $('#' + id + '-hidden_longitude').val(event.latLng.lng());
 
         });
         google.maps.event.addListener(map, 'mousemove', function(event){

@@ -197,15 +197,17 @@ class Admin extends MY_Controller
 		if ( $this->POST( 'submit' ) ) {
 
 			$this->data['proyek'] = [
-				'namobj'		=> $this->POST('namobj'),
-				'kl_dat_das'	=> $this->POST('kl_dat_das'),
-				'thn_data'		=> $this->POST('thn_data'),
-				'id_provinsi'	=> $this->POST('id_provinsi'),
-				'id_kabupaten'	=> $this->POST('id_kabupaten'),
-				'vol'			=> $this->POST('vol'),
-				'biaya'			=> $this->POST('biaya'),
-				'latitude'		=> $this->POST('latitude'),
-				'longitude'		=> $this->POST('longitude'),
+				'namobj'					=> $this->POST('namobj'),
+				'kl_dat_das'				=> $this->POST('kl_dat_das'),
+				'thn_data'					=> $this->POST('thn_data'),
+				'id_provinsi'				=> $this->POST('id_provinsi'),
+				'id_kabupaten'				=> $this->POST('id_kabupaten'),
+				'vol'						=> $this->POST('vol'),
+				'biaya'						=> $this->POST('biaya'),
+				'latitude'					=> $this->POST('latitude'),
+				'longitude'					=> $this->POST('longitude'),
+				'persentase_penyelesaian'	=> $this->POST('persentase_penyelesaian'),
+				'tanggal_selesai'			=> $this->POST('tanggal_selesai')
 			];
 
 			$this->proyek_m->insert($this->data['proyek']);
@@ -247,15 +249,17 @@ class Admin extends MY_Controller
 		if ($this->POST('submit'))
 		{
 			$this->data['proyek'] = [
-				'namobj'		=> $this->POST('namobj'),
-				'kl_dat_das'	=> $this->POST('kl_dat_das'),
-				'thn_data'		=> $this->POST('thn_data'),
-				'id_provinsi'	=> $this->POST('id_provinsi'),
-				'id_kabupaten'	=> $this->POST('id_kabupaten'),
-				'vol'			=> $this->POST('vol'),
-				'biaya'			=> $this->POST('biaya'),
-				'latitude'		=> $this->POST('latitude'),
-				'longitude'		=> $this->POST('longitude')
+				'namobj'					=> $this->POST('namobj'),
+				'kl_dat_das'				=> $this->POST('kl_dat_das'),
+				'thn_data'					=> $this->POST('thn_data'),
+				'id_provinsi'				=> $this->POST('id_provinsi'),
+				'id_kabupaten'				=> $this->POST('id_kabupaten'),
+				'vol'						=> $this->POST('vol'),
+				'biaya'						=> $this->POST('biaya'),
+				'latitude'					=> $this->POST('latitude'),
+				'longitude'					=> $this->POST('longitude'),
+				'persentase_penyelesaian'	=> $this->POST('persentase_penyelesaian'),
+				'tanggal_selesai'			=> $this->POST('tanggal_selesai')
 			];
 
 			$this->proyek_m->update($this->data['id_data'], $this->data['proyek']);

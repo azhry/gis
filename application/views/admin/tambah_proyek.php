@@ -1,7 +1,9 @@
+<link rel="stylesheet" type="text/css" href="<?= base_url( 'assets/vendor/bootstrap-datepicker/bootstrap-datepicker.min.css' ) ?>">
+
 <!-- Page -->
 <div class="page animsition">
     <div class="page-header">
-        <h3 class="page-title">Tambah Data Proyek <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#add"><i class="fa fa-plus"></i></button></h3>
+        <h3 class="page-title">Tambah Data Proyek</h3>
         <ol class="breadcrumb">
             <li><a href="<?= base_url('admin') ?>">Dashboard</a></li>
             <li><a href="<?= base_url('admin/proyek') ?>">Data Proyek</a></li>
@@ -53,6 +55,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
+                                <label>Koordinat Lokasi Proyek</label><br>
+                                Latitude: <input step="any" class="form-control coord-input" type="number" id="map-add-hidden_latitude" name="latitude" required><br>
+                                Longitude: <input step="any" class="form-control coord-input" type="number" id="map-add-hidden_longitude" name="longitude" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="Vol">Vol<span class="required">*</span></label>
                                 <input type="text" class="form-control" name="vol" required>
                             </div>
@@ -61,9 +68,12 @@
                                 <input type="text" class="form-control" name="biaya" required>
                             </div>
                             <div class="form-group">
-                                <label>Koordinat Lokasi Proyek</label><br>
-                                Latitude: <input class="form-control" type="text" id="map-add-hidden_latitude" name="latitude" required><br>
-                                Longitude: <input class="form-control" type="text" id="map-add-hidden_longitude" name="longitude" required>
+                                <label for="persentase_penyelesaian">Persentase Penyelesaian</label>
+                                <input type="number" class="form-control" required name="persentase_penyelesaian" min="0" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal_selesai">Tanggal Selesai</label>
+                                <input data-plugin="datepicker" type="text" class="datepicker form-control" required name="tanggal_selesai">
                             </div>
                             <div class="form-group">
                                 <label for="foto">Upload Foto Proyek<span class="required">*</span></label>
@@ -82,10 +92,33 @@
     </div>
 </div>
 <!-- End Page -->
-
+<script type="text/javascript" src="<?= base_url( 'assets/vendor/bootstrap-datepicker/bootstrap-datepicker.min.js' ) ?>"></script>
 <script type="text/javascript">
+    var bengkulu = new google.maps.LatLng(-3.793703, 102.270013);
+    var map = new google.maps.Map(document.getElementById( 'map-add' ), {
+        zoom: 12,
+        center: bengkulu
+    });
+    var marker = new google.maps.Marker({
+        position: bengkulu,
+        map: map
+    });
+
     $( document ).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
         initMap( 'map-add' );
+
+        $( '#map-add-hidden_latitude, #map-add-hidden_longitude' ).keypress(function() {
+            var lat = $( '#map-add-hidden_latitude' ).val();
+            var lng = $( '#map-add-hidden_longitude' ).val();
+
+            var latLng = new google.maps.LatLng( lat, lng );
+            marker.setPosition( latLng );
+            map.setCenter( latLng );
+        });
     });
 
     function initMap(id) {
@@ -93,21 +126,12 @@
         $('#' + id + '-longitude').text('');
         $('#' + id + '-hidden_latitude').val(null);
         $('#' + id + '-hidden_longitude').val(null);
-        var coordinate = {lat: -6.121435, lng: 106.774124};
-        var map = new google.maps.Map(document.getElementById(id), {
-            zoom: 8,
-            center: coordinate
-        });
-        var marker = new google.maps.Marker({
-            position: coordinate,
-            map: map
-        });
+        
         google.maps.event.addListener(map, 'click', function(event){
-        var latLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-        marker.setPosition(latLng);
-        $('#' + id + '-hidden_latitude').val(event.latLng.lat());
-        $('#' + id + '-hidden_longitude').val(event.latLng.lng());
-
+            var latLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+            marker.setPosition(latLng);
+            $('#' + id + '-hidden_latitude').val(event.latLng.lat());
+            $('#' + id + '-hidden_longitude').val(event.latLng.lng());
         });
         google.maps.event.addListener(map, 'mousemove', function(event){
             map.setOptions({draggableCursor: 'pointer'});

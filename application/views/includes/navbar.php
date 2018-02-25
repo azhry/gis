@@ -50,22 +50,9 @@
           <li class="dropdown">
             <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false"
             data-animation="slide-bottom" role="button">
-              <span class="avatar avatar-online">
-                <img src="<?= base_url('assets') ?>/portraits/5.jpg" alt="...">
-                <i></i>
-              </span>
+                <i class="fa fa-user"></i> <i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu" role="menu">
-              <!-- <li role="presentation">
-                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-user" aria-hidden="true"></i> Profile</a>
-              </li>
-              <li role="presentation">
-                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-payment" aria-hidden="true"></i> Billing</a>
-              </li>
-              <li role="presentation">
-                <a href="javascript:void(0)" role="menuitem"><i class="icon wb-settings" aria-hidden="true"></i> Settings</a>
-              </li>
-              <li class="divider" role="presentation"></li> -->
               <li role="presentation">
                 <a href="<?= base_url('Logout') ?>" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Logout</a>
               </li>

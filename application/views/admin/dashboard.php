@@ -74,7 +74,7 @@
                       </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <!-- <div class="col-sm-3">
                       <div class="example">
                         <blockquote class="blockquote blockquote-danger">
                           <a href="<?= base_url('admin/provinsi') ?>"> 
@@ -90,7 +90,7 @@
                           </a>
                         </blockquote>
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-sm-3">
                       <div class="example">
