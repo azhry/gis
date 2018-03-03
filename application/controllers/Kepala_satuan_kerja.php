@@ -177,5 +177,14 @@ class Kepala_satuan_kerja extends MY_Controller
 		$this->template($this->data);
 	}
 
+	public function grafik_proyek()
+	{
+		$this->load->model('kabupaten_m');
+		$this->load->model('proyek_m');
 
+		$this->data['kabupaten']	= $this->kabupaten_m->get();
+		$this->data['title']		= 'Data Proyek | ' . $this->title;
+		$this->data['content']		= 'kepala_satuan_kerja/grafik';
+		$this->template($this->data);	
+	}
 }
