@@ -34,18 +34,17 @@
 <script type="text/javascript">
 	$( document ).ready(function() {
 
-		var labels = [];
-		var datasets = [];
-		var data = [];
+		var labels 	= [];
+		var data 	= [];
 
-		<?php foreach ( $kabupaten as $k ): ?>
-			labels.push( '<?= $k->nama ?>' )
-			<?php  
-				$jumlah = count($this->proyek_m->get(['id_kabupaten' => $k->id_kabupaten]));
-			?>
-			data.push( <?= isset( $overall ) ? $jumlah : 0 ?> );
+		<?php foreach ( $jumlah_proyek as $row ): ?>
+
+		labels.push('<?= $row->nama ?>');
+		data.push('<?= $row->jumlah_proyek ?>');
+
 		<?php endforeach; ?>
 
+		var datasets = [];
 		datasets.push({
 			label: 'Jumlah Proyek: ',
 			backgroundColor: 'rgba(26,179,148,0.5)',
@@ -66,6 +65,15 @@
 	      title: {
 	        display: true,
 	        text: 'Grafik Jumlah Projek Setiap Kabupaten'
+	      },
+	      scales: {
+	      	yAxes: [{
+	      		ticks: {
+	      			min: 0,
+	      			max: <?= count( $proyek ) ?>,
+	      			stepSize: 1
+	      		}
+	      	}]
 	      }
 	    }
 	});

@@ -33,4 +33,17 @@ class Proyek_m extends MY_Model
 		$query = $this->db->get();
 		return $query->row();
 	}
+
+
+	public function get_data_jumlah_proyek() {
+
+		$this->db->select( '*, COUNT(proyek.id) AS jumlah_proyek' );
+		$this->db->from( 'kabupaten' );
+		$this->db->join( $this->data['table_name'], 'kabupaten.id_kabupaten = ' . $this->data['table_name'] . '.id_kabupaten', 'left' );
+		$this->db->group_by( $this->data['table_name'] . '.id_kabupaten' );
+		$query = $this->db->get();
+		return $query->result();
+
+	}
+
 }

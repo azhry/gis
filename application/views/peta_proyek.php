@@ -31,6 +31,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <div class="page-header">
                     <h3 class="page-title">Peta Proyek</h3>
+                    <a href="<?= base_url( 'login' ) ?>" class="btn btn-primary">Login</a>
                 </div>
                 <div class="page-content">
                     <!-- Panel Basic -->
