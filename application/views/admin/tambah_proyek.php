@@ -25,7 +25,7 @@
                     <div class="col-md-4">
                         <?= form_open_multipart( 'admin/tambah-proyek' ) ?>
                             <div class="form-group">
-                                <label for="Namobj">Namobj<span class="required">*</span></label>
+                                <label for="Namobj">Nama Proyek<span class="required">*</span></label>
                                 <input type="text" class="form-control" name="namobj" required>
                             </div>
                             <div class="form-group">
@@ -37,21 +37,18 @@
                                 <input type="number" class="form-control" name="thn_data" required>
                             </div>
                             <div class="form-group">
-                                <label for="id_provinsi">Provinsi<span class="required">*</span></label>
-                                <select class="form-control" name="id_provinsi" required>
-                                    <option>Pilih Provinsi</option>
-                                    <?php foreach ($provinsi as $row): ?>
-                                    <option value="<?= $row->id_provinsi ?>"><?= $row->nama ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <label for="id_kabupaten">Kabupaten<span class="required">*</span></label>
-                                <select class="form-control" name="id_kabupaten" required>
+                                <select class="form-control" id="id_kabupaten" name="id_kabupaten" required>
                                     <option>Pilih Kabupaten</option>
                                     <?php foreach ($kabupaten as $row): ?>
                                     <option value="<?= $row->id_kabupaten ?>"><?= $row->nama ?></option>
                                     <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_kecamatan">Kecamatan<span class="required">*</span></label>
+                                <select class="form-control" id="id_kecamatan" name="id_kecamatan" required>
+                                    <option>Pilih Kecamatan</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -64,12 +61,8 @@
                                 <input type="text" class="form-control" name="vol" required>
                             </div>
                             <div class="form-group">
-                                <label for="Biaya">Biaya<span class="required">*</span></label>
-                                <input type="text" class="form-control" name="biaya" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="persentase_penyelesaian">Persentase Penyelesaian</label>
-                                <input type="number" class="form-control" required name="persentase_penyelesaian" min="0" max="100">
+                                <label for="Biaya">Anggaran Biaya<span class="required">*</span></label>
+                                <input type="text" class="form-control" name="anggaran" required>
                             </div>
                             <div class="form-group">
                                 <label for="tanggal_selesai">Tanggal Mulai</label>
@@ -122,6 +115,21 @@
             var latLng = new google.maps.LatLng( lat, lng );
             marker.setPosition( latLng );
             map.setCenter( latLng );
+        });
+
+        $( '#id_kabupaten' ).on('change', function() {
+            $.ajax({
+                url: '<?= base_url( 'admin/tambah-proyek?id_kabupaten=' ) ?>' + $( this ).val(),
+                type: 'GET',
+                success: function( response ) {
+                    var json = $.parseJSON( response );
+                    var html = '<option>Pilih Kecamatan</option>';
+                    for ( var i = 0; i < json.length; i++ ) {
+                        html += '<option value="' + json[i].id_kecamatan + '">' + json[i].nama + '</option>';
+                    }
+                    $( '#id_kecamatan' ).html( html );
+                }
+            });
         });
     });
 

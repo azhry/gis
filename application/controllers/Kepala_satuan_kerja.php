@@ -33,7 +33,6 @@ class Kepala_satuan_kerja extends MY_Controller
 
 	public function proyek()
 	{
-		$this->load->model('provinsi_m');
 		$this->load->model('kabupaten_m');
 		$this->load->model('proyek_m');
 
@@ -47,7 +46,6 @@ class Kepala_satuan_kerja extends MY_Controller
 			exit;	
 		}
 
-		$this->data['provinsi']		= $this->provinsi_m->get();
 		$this->data['kabupaten']	= $this->kabupaten_m->get();
 		$this->data['proyek']			= $this->proyek_m->get_proyek();
 		$this->data['title']		= 'Data Proyek | ' . $this->title;
@@ -163,6 +161,8 @@ class Kepala_satuan_kerja extends MY_Controller
 			exit;
 		}
 
+		$this->load->model( 'progress_m' );
+		$this->data['progress']	= $this->progress_m->get_progress( $this->data['id_data'] );
 		$this->data['title'] 	= 'Detail proyek | ' . $this->title;
 		$this->data['content']	= 'kepala_satuan_kerja/detail_proyek';
 		$this->template($this->data);
@@ -170,7 +170,8 @@ class Kepala_satuan_kerja extends MY_Controller
 
 	public function peta_proyek()
 	{
-		$this->load->model('proyek_m');
+		$this->load->model( 'proyek_m' );
+		$this->load->model( 'progress_m' );
 		$this->data['proyek']	= $this->proyek_m->get_proyek();
 		$this->data['title']	= 'Peta Proyek | ' . $this->title;
 		$this->data['content']	= 'kepala_satuan_kerja/peta_proyek';
@@ -179,10 +180,38 @@ class Kepala_satuan_kerja extends MY_Controller
 
 	public function grafik_proyek()
 	{
-		$this->load->model('proyek_m');
-
+		$this->load->model( 'proyek_m' );
+		$this->load->model( 'kabupaten_m' );
+		$this->load->model( 'progress_m' );
+		$this->data['kabupaten']		= $this->kabupaten_m->get();
 		$this->data['jumlah_proyek']	= $this->proyek_m->get_data_jumlah_proyek();
 		$this->data['proyek']			= $this->proyek_m->get();
+
+		if ( $this->POST( 'get' ) && $this->POST( 'id_kabupaten' ) ) {
+
+			$this->data['proyek']	= $this->proyek_m->get_proyek([ 'proyek.id_kabupaten' => $this->POST('id_kabupaten') ]);
+
+			$retrieved_data['main'] 		= [];
+			$retrieved_data['kecamatan']	= [];
+			$this->load->model( 'kecamatan_m' );
+			if ( count( $this->data['proyek'] ) > 0 ) {
+				
+				foreach ( $this->data['proyek'] as $proyek ) {
+
+					$retrieved_data['main'] []= [
+						'proyek'	=> $proyek,
+						'progress'	=> $this->progress_m->get_progress( $proyek->id )
+					];
+
+				}
+
+			}
+			$retrieved_data['kecamatan'] = $this->kecamatan_m->get([ 'id_kabupaten' => $this->POST( 'id_kabupaten' ) ]);
+			echo json_encode( $retrieved_data );
+			exit;
+
+		}
+
 		$this->data['title']			= 'Data Proyek | ' . $this->title;
 		$this->data['content']			= 'kepala_satuan_kerja/grafik';
 		$this->template($this->data);	

@@ -13,10 +13,10 @@ class Proyek_m extends MY_Model
 	{
 		if ((is_array($cond) && count($cond) > 0) or (is_string($cond) && strlen($cond) >= 3))
 			$this->db->where($cond);
-		$this->db->select('*, provinsi.nama AS nama_provinsi, kabupaten.nama AS nama_kabupaten');
+		$this->db->select('*, kabupaten.nama AS nama_kabupaten, kecamatan.nama AS nama_kecamatan');
 		$this->db->from($this->data['table_name']);
-		$this->db->join('provinsi', $this->data['table_name'] . '.id_provinsi = provinsi.id_provinsi');
 		$this->db->join('kabupaten', $this->data['table_name'] . '.id_kabupaten = kabupaten.id_kabupaten');
+		$this->db->join('kecamatan', $this->data['table_name'] . '.id_kecamatan = kecamatan.id_kecamatan');
 		$this->db->order_by('id', 'DESC');
 		$query = $this->db->get();
 		return $query->result();
@@ -26,10 +26,10 @@ class Proyek_m extends MY_Model
 	{
 		if ((is_array($cond) && count($cond) > 0) or (is_string($cond) && strlen($cond) >= 3))
 			$this->db->where($cond);
-		$this->db->select('*, provinsi.nama AS nama_provinsi, kabupaten.nama AS nama_kabupaten');
+		$this->db->select('*, kabupaten.nama AS nama_kabupaten, kecamatan.nama AS nama_kecamatan');
 		$this->db->from($this->data['table_name']);
-		$this->db->join('provinsi', $this->data['table_name'] . '.id_provinsi = provinsi.id_provinsi');
 		$this->db->join('kabupaten', $this->data['table_name'] . '.id_kabupaten = kabupaten.id_kabupaten');
+		$this->db->join('kecamatan', $this->data['table_name'] . '.id_kecamatan = kecamatan.id_kecamatan');
 		$query = $this->db->get();
 		return $query->row();
 	}

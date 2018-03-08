@@ -39,22 +39,22 @@
                             <div class="example table-responsive">
                                 <table class="table">
                                     <tbody>
-                                        <tr>
+                                        <!-- <tr>
                                             <th>kl_dat_das</th>
                                             <td><?= $proyek->kl_dat_das ?></td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
-                                            <th>Namobj</th>
+                                            <th>Nama Proyek</th>
                                             <td><?= $proyek->namobj ?></td>
                                         </tr>
                                         <tr>
-                                            <th>Tahun Data</th>
+                                            <th>Tahun</th>
                                             <td><?= $proyek->thn_data ?></td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <th>Provinsi</th>
                                             <td><?= $proyek->nama_provinsi ?></td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                             <th>Kabupaten</th>
                                             <td><?= $proyek->nama_kabupaten ?></td>
@@ -64,8 +64,16 @@
                                             <td><?= $proyek->vol ?></td>
                                         </tr>
                                         <tr>
-                                            <th>Biaya</th>
-                                            <td><?= $proyek->biaya ?></td>
+                                            <th>Anggaran Biaya</th>
+                                            <td><?= 'Rp ' . number_format($proyek->anggaran, 0, ',', '.') ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tanggal Mulai</th>
+                                            <td><?= $proyek->tanggal_mulai ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tanggal Selesai</th>
+                                            <td><?= $proyek->tanggal_selesai ?></td>
                                         </tr>
                                         <tr>
                                             <th>Longitude</th>
@@ -106,21 +114,35 @@
       new Chart(lineChart, {
         type : 'line',
         data:{
-            labels: ['label1', 'label2', 'label3'],
+            labels: [
+                <?php foreach ( $progress as $row ): ?>
+                '<?= 'Periode ' . $row->periode ?>', 
+                <?php endforeach; ?>
+            ],
             datasets:[{
-                label: 'data1',
+                label: 'Progress Proyek <?= $proyek->namobj ?>',
                 borderColor: "rgba(26,179,148,0.8)",
                 pointBackgroundColor: "rgba(26,179,148,0.5)",
                 pointBorderColor: "rgba(26,179,148,0.8)",
-                data: [1, 2, 3]
-            },
-            {
-                label: 'data2',
-                borderColor: "yellow",
-                pointBackgroundColor: "rgba(26,179,148,0.5)",
-                pointBorderColor: "rgba(26,179,148,0.8)",
-                data: [3, 2, 1]
+                data: [
+                    <?php foreach ( $progress as $row ): ?>
+                    '<?= $row->progress ?>', 
+                    <?php endforeach; ?>
+                ]
             }],
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true,
+                        steps: 10,
+                        stepValue: 5,
+                        max: 100
+                    }
+                }]
+            }
         }
       });
 

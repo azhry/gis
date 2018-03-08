@@ -25,7 +25,7 @@
                     <div class="col-md-4">
                         <?= form_open_multipart( 'admin/edit-proyek/' . $id_data ) ?>
                             <div class="form-group">
-                                <label for="Namobj">Namobj<span class="required">*</span></label>
+                                <label for="Namobj">Nama Proyek<span class="required">*</span></label>
                                 <input type="text" class="form-control" value="<?= $proyek->namobj ?>" name="namobj" required>
                             </div>
                             <div class="form-group">
@@ -37,35 +37,31 @@
                                 <input type="number" class="form-control" value="<?= $proyek->thn_data ?>" name="thn_data" required>
                             </div>
                             <div class="form-group">
-                                <label for="id_provinsi">Provinsi<span class="required">*</span></label>
-                                <?php $data_provinsi = []; foreach ($provinsi as $row): ?>
-                                    <?php $data_provinsi[$row->id_provinsi] = $row->nama; ?>
-                                <?php endforeach; ?>
-                                <?= form_dropdown( 'id_provinsi', $data_provinsi, $row->id_provinsi, [ 'class' => 'form-control', 'name' => 'id_provinsi' ] ) ?>
-                            </div>
-                            <div class="form-group">
                                 <label for="id_kabupaten">Kabupaten<span class="required">*</span></label>
                                 <?php $data_kabupaten = []; foreach ($kabupaten as $row): ?>
                                     <?php $data_kabupaten[$row->id_kabupaten] = $row->nama; ?>
                                 <?php endforeach; ?>
-                                <?= form_dropdown( 'id_kabupaten', $data_kabupaten, $row->id_kabupaten, [ 'class' => 'form-control', 'name' => 'id_kabupaten' ] ) ?>
+                                <?= form_dropdown( 'id_kabupaten', $data_kabupaten, $proyek->id_kabupaten, [ 'class' => 'form-control', 'name' => 'id_kabupaten', 'id' => 'id_kabupaten' ] ) ?>
+                            </div>
+                            <div class="form-group">
+                                <label for="id_kecamatan">Kecamatan<span class="required">*</span></label>
+                                <?php $data_kecamatan = []; foreach ($kecamatan as $row): ?>
+                                    <?php $data_kecamatan[$row->id_kecamatan] = $row->nama; ?>
+                                <?php endforeach; ?>
+                                <?= form_dropdown( 'id_kecamatan', $data_kecamatan, $proyek->id_kecamatan, [ 'class' => 'form-control', 'name' => 'id_kecamatan', 'id' => 'id_kecamatan' ] ) ?>
                             </div>
                             <div class="form-group">
                                 <label for="Vol">Vol<span class="required">*</span></label>
                                 <input type="text" class="form-control" name="vol" value="<?= $proyek->vol ?>" required>
                             </div>
                             <div class="form-group">
-                                <label for="Biaya">Biaya<span class="required">*</span></label>
-                                <input type="text" class="form-control" value="<?= $proyek->biaya ?>" name="biaya" required>
+                                <label for="Biaya">Anggaran<span class="required">*</span></label>
+                                <input type="text" class="form-control" value="<?= $proyek->anggaran ?>" name="anggaran" required>
                             </div>
                             <div class="form-group">
                                 <label>Koordinat Lokasi Proyek</label><br>
                                 Latitude: <input class="form-control" type="text" id="map-add-hidden_latitude" name="latitude" value="<?= $proyek->latitude ?>" required><br>
                                 Longitude: <input class="form-control" type="text" id="map-add-hidden_longitude" value="<?= $proyek->longitude ?>" name="longitude" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="persentase_penyelesaian">Persentase Penyelesaian</label>
-                                <input type="number" class="form-control" value="<?= $proyek->persentase_penyelesaian ?>" required name="persentase_penyelesaian" min="0" max="100">
                             </div>
                             <div class="form-group">
                                 <?php $waktu = explode(' ', $proyek->tanggal_mulai); ?>
@@ -123,6 +119,21 @@
             var latLng = new google.maps.LatLng( lat, lng );
             marker.setPosition( latLng );
             map.setCenter( latLng );
+        });
+
+        $( '#id_kabupaten' ).on('change', function() {
+            $.ajax({
+                url: '<?= base_url( 'admin/tambah-proyek?id_kabupaten=' ) ?>' + $( this ).val(),
+                type: 'GET',
+                success: function( response ) {
+                    var json = $.parseJSON( response );
+                    var html = '<option>Pilih Kecamatan</option>';
+                    for ( var i = 0; i < json.length; i++ ) {
+                        html += '<option value="' + json[i].id_kecamatan + '">' + json[i].nama + '</option>';
+                    }
+                    $( '#id_kecamatan' ).html( html );
+                }
+            });
         });
     });
 

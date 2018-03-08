@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2018 at 02:45 PM
+-- Generation Time: Mar 08, 2018 at 03:54 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -38,7 +38,28 @@ CREATE TABLE `kabupaten` (
 --
 
 INSERT INTO `kabupaten` (`id_kabupaten`, `nama`) VALUES
-(1, 'Bengkulu Selatan');
+(1, 'Bengkulu Selatan'),
+(2, 'Bengkulu Utara');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kecamatan`
+--
+
+CREATE TABLE `kecamatan` (
+  `id_kecamatan` int(11) NOT NULL,
+  `nama` text NOT NULL,
+  `id_kabupaten` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `kecamatan`
+--
+
+INSERT INTO `kecamatan` (`id_kecamatan`, `nama`, `id_kabupaten`) VALUES
+(1, 'Kecamatan A', 1),
+(2, 'Kecamatan B', 2);
 
 -- --------------------------------------------------------
 
@@ -67,20 +88,24 @@ INSERT INTO `pegawai` (`nip`, `nama`, `jabatan`, `email`, `nomor_hp`, `password`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `provinsi`
+-- Table structure for table `progress`
 --
 
-CREATE TABLE `provinsi` (
-  `id_provinsi` int(11) NOT NULL,
-  `nama` text NOT NULL
+CREATE TABLE `progress` (
+  `id_progress` int(11) NOT NULL,
+  `id_proyek` int(11) NOT NULL,
+  `serapan_anggaran` bigint(20) NOT NULL,
+  `periode` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `provinsi`
+-- Dumping data for table `progress`
 --
 
-INSERT INTO `provinsi` (`id_provinsi`, `nama`) VALUES
-(1, 'Bengkulu');
+INSERT INTO `progress` (`id_progress`, `id_proyek`, `serapan_anggaran`, `periode`) VALUES
+(6, 9, 123, 2),
+(8, 9, 654, 3),
+(9, 9, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -93,13 +118,13 @@ CREATE TABLE `proyek` (
   `kl_dat_das` varchar(225) NOT NULL,
   `namobj` text NOT NULL,
   `thn_data` int(4) NOT NULL,
-  `id_provinsi` int(11) NOT NULL,
   `id_kabupaten` int(11) NOT NULL,
+  `id_kecamatan` int(11) NOT NULL,
   `vol` varchar(100) NOT NULL,
-  `biaya` bigint(20) NOT NULL,
+  `anggaran` bigint(20) NOT NULL,
   `longitude` double NOT NULL,
   `latitude` double NOT NULL,
-  `persentase_penyelesaian` float NOT NULL DEFAULT '0',
+  `tanggal_mulai` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `tanggal_selesai` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -107,11 +132,11 @@ CREATE TABLE `proyek` (
 -- Dumping data for table `proyek`
 --
 
-INSERT INTO `proyek` (`id`, `kl_dat_das`, `namobj`, `thn_data`, `id_provinsi`, `id_kabupaten`, `vol`, `biaya`, `longitude`, `latitude`, `persentase_penyelesaian`, `tanggal_selesai`) VALUES
-(6, 'ekjkewlrj', 'rklterklj', 2018, 1, 1, 'werewj', 342, 107.633056640625, -6.871892962887516, 0, '2018-02-25 12:13:13'),
-(7, 'hehe', 'Hehe', 2020, 1, 1, 'Hehe', 324, 104.7711181640625, -2.9869273933348635, 0, '2018-02-25 12:13:13'),
-(8, 'Bengkulu Selatan', 'Pembangunan Drainase Volume = 838 M dan Pekerjaan Bak Kontrol dan Kotak Sampah , Volume = 7 Unit, Kelurahan Kota Medan Kecamtan Kota Manna,', 2017, 1, 1, '6 ds/KEL', 500000000, 104.05803680419922, -5.069057826784033, 0, '2018-02-25 12:13:13'),
-(9, 'Test', 'Test', 2018, 1, 1, '2', 22222222, 102.33730425976569, -3.8526230974660423, 67, '2018-07-27 17:00:00');
+INSERT INTO `proyek` (`id`, `kl_dat_das`, `namobj`, `thn_data`, `id_kabupaten`, `id_kecamatan`, `vol`, `anggaran`, `longitude`, `latitude`, `tanggal_mulai`, `tanggal_selesai`) VALUES
+(6, 'ekjkewlrj', 'rklterklj', 2018, 1, 1, 'werewj', 342, 107.633056640625, -6.871892962887516, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
+(7, 'hehe', 'Hehe', 2020, 1, 1, 'Hehe', 324, 104.7711181640625, -2.9869273933348635, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
+(8, 'Bengkulu Selatan', 'Pembangunan Drainase Volume = 838 M dan Pekerjaan Bak Kontrol dan Kotak Sampah , Volume = 7 Unit, Kelurahan Kota Medan Kecamtan Kota Manna,', 2017, 2, 2, '6 ds/KEL', 500000000, 104.05803680419922, -5.069057826784033, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
+(9, 'Test', 'Test', 2018, 1, 1, '2', 1000, 102.33730425976569, -3.8526230974660423, '2018-03-07 10:04:40', '2018-07-27 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -144,24 +169,33 @@ ALTER TABLE `kabupaten`
   ADD PRIMARY KEY (`id_kabupaten`);
 
 --
+-- Indexes for table `kecamatan`
+--
+ALTER TABLE `kecamatan`
+  ADD PRIMARY KEY (`id_kecamatan`),
+  ADD KEY `id_kabupaten` (`id_kabupaten`);
+
+--
 -- Indexes for table `pegawai`
 --
 ALTER TABLE `pegawai`
-  ADD PRIMARY KEY (`nip`);
+  ADD PRIMARY KEY (`nip`),
+  ADD KEY `id_role` (`id_role`);
 
 --
--- Indexes for table `provinsi`
+-- Indexes for table `progress`
 --
-ALTER TABLE `provinsi`
-  ADD PRIMARY KEY (`id_provinsi`);
+ALTER TABLE `progress`
+  ADD PRIMARY KEY (`id_progress`),
+  ADD KEY `id_proyek` (`id_proyek`);
 
 --
 -- Indexes for table `proyek`
 --
 ALTER TABLE `proyek`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_provinsi` (`id_provinsi`),
-  ADD KEY `id_kabupaten` (`id_kabupaten`);
+  ADD KEY `id_kabupaten` (`id_kabupaten`),
+  ADD KEY `id_kecamatan` (`id_kecamatan`);
 
 --
 -- Indexes for table `role`
@@ -177,13 +211,19 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `kabupaten`
 --
 ALTER TABLE `kabupaten`
-  MODIFY `id_kabupaten` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kabupaten` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `provinsi`
+-- AUTO_INCREMENT for table `kecamatan`
 --
-ALTER TABLE `provinsi`
-  MODIFY `id_provinsi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `kecamatan`
+  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `progress`
+--
+ALTER TABLE `progress`
+  MODIFY `id_progress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `proyek`
@@ -202,11 +242,29 @@ ALTER TABLE `role`
 --
 
 --
+-- Constraints for table `kecamatan`
+--
+ALTER TABLE `kecamatan`
+  ADD CONSTRAINT `kecamatan_ibfk_1` FOREIGN KEY (`id_kabupaten`) REFERENCES `kabupaten` (`id_kabupaten`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pegawai`
+--
+ALTER TABLE `pegawai`
+  ADD CONSTRAINT `pegawai_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `progress`
+--
+ALTER TABLE `progress`
+  ADD CONSTRAINT `progress_ibfk_1` FOREIGN KEY (`id_proyek`) REFERENCES `proyek` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `proyek`
 --
 ALTER TABLE `proyek`
-  ADD CONSTRAINT `proyek_ibfk_1` FOREIGN KEY (`id_provinsi`) REFERENCES `provinsi` (`id_provinsi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `proyek_ibfk_2` FOREIGN KEY (`id_kabupaten`) REFERENCES `kabupaten` (`id_kabupaten`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `proyek_ibfk_2` FOREIGN KEY (`id_kabupaten`) REFERENCES `kabupaten` (`id_kabupaten`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `proyek_ibfk_3` FOREIGN KEY (`id_kecamatan`) REFERENCES `kecamatan` (`id_kecamatan`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

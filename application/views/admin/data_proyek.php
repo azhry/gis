@@ -24,12 +24,8 @@
                         <tr>
                             <th>No</th>
                             <th>Foto</th>
-                            <!-- <th>KL_DAT_DAS</th> -->
-                            <th>Namobj</th>
-                            <!-- <th>Tahun</th>
-                            <th>Provinsi</th> -->
+                            <th>Nama Proyek</th>
                             <th>Kabupaten</th>
-                            <!-- <th>Koordinat</th> -->
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -40,10 +36,7 @@
                             <td>
                                 <img src="<?= base_url('img/' . $row->id . '.jpg') ?>" width="100" height="100" onerror="this.src = 'http://placehold.it/100x100'">
                             </td>
-                            <!-- <td><?= $row->kl_dat_das ?></td> -->
                             <td><?= $row->namobj ?></td>
-                            <!-- <td><?= $row->thn_data ?></td>
-                            <td><?= $row->nama_provinsi ?></td> -->
                             <td><?= $row->nama_kabupaten ?></td>
                             <td>
                                 <center>

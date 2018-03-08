@@ -28,16 +28,16 @@
                             <span class="site-menu-title">Peta Proyek</span>
                         </a>
                     </li>
-                    <!-- <li class="site-menu-item">
-                        <a href="<?= base_url('admin/provinsi') ?>" data-slug="dashboard">
-                            <i class="site-menu-icon fa fa-book" aria-hidden="true"></i>
-                            <span class="site-menu-title">Provinsi</span>
-                        </a>
-                    </li> -->
                     <li class="site-menu-item">
                         <a href="<?= base_url('admin/kabupaten') ?>" data-slug="dashboard">
                             <i class="site-menu-icon fa fa-book" aria-hidden="true"></i>
                             <span class="site-menu-title">Kabupaten</span>
+                        </a>
+                    </li>
+                    <li class="site-menu-item">
+                        <a href="<?= base_url('admin/kecamatan') ?>" data-slug="dashboard">
+                            <i class="site-menu-icon fa fa-book" aria-hidden="true"></i>
+                            <span class="site-menu-title">Kecamatan</span>
                         </a>
                     </li>
                 </ul>
