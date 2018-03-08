@@ -74,14 +74,48 @@
                         <!-- End Example Basic -->
                     </div>
                 </div>
+
+                <div class="row">
+                    <div>
+                        <h3>Grafik</h3>
+                        <canvas id="proyek" height="120"></canvas>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
+
+<script type="text/javascript" src="<?= base_url('assets/js/plugins/Chart.min.js') ?>"></script>
+
   <script type="text/javascript">
     $(document).ready(function() {
       initMap();
+
+      var lineChart = document.getElementById('proyek').getContext('2d');
+      new Chart(lineChart, {
+        type : 'line',
+        data:{
+            labels: ['label1', 'label2', 'label3'],
+            datasets:[{
+                label: 'data1',
+                borderColor: "rgba(26,179,148,0.8)",
+                pointBackgroundColor: "rgba(26,179,148,0.5)",
+                pointBorderColor: "rgba(26,179,148,0.8)",
+                data: [1, 2, 3]
+            },
+            {
+                label: 'data2',
+                borderColor: "yellow",
+                pointBackgroundColor: "rgba(26,179,148,0.5)",
+                pointBorderColor: "rgba(26,179,148,0.8)",
+                data: [3, 2, 1]
+            }],
+        }
+      });
+
     });
 
     function initMap() {
