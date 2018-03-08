@@ -68,6 +68,11 @@
                                 <input type="number" class="form-control" value="<?= $proyek->persentase_penyelesaian ?>" required name="persentase_penyelesaian" min="0" max="100">
                             </div>
                             <div class="form-group">
+                                <?php $waktu = explode(' ', $proyek->tanggal_mulai); ?>
+                                <label for="tanggal_selesai">Tanggal Mulai</label>
+                                <input data-plugin="datepicker" value="<?= count($waktu) > 1 ? $waktu[0] : '-'  ?>" type="text" class="datepicker form-control" required name="tanggal_mulai">
+                            </div>
+                            <div class="form-group">
                                 <?php $waktu = explode(' ', $proyek->tanggal_selesai); ?>
                                 <label for="tanggal_selesai">Tanggal Selesai</label>
                                 <input data-plugin="datepicker" value="<?= count($waktu) > 1 ? $waktu[0] : '-'  ?>" type="text" class="datepicker form-control" required name="tanggal_selesai">

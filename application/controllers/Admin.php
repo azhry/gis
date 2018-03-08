@@ -419,4 +419,110 @@ class Admin extends MY_Controller
 		$this->data['content']		= 'admin/data_kabupaten';
 		$this->template($this->data);	
 	}
+
+
+	public function progress() {
+
+		$this->load->model( 'progress_m' );
+
+		$this->data['id_proyek'] = $this->uri->segment(3);
+
+		if ($this->GET('delete') && $this->GET('id_progress'))
+		{
+			$this->data['id_progress'] = $this->GET('id_progress', true);
+			$this->progress_m->delete($this->data['id_progress']);
+			$this->flashmsg('<i class="fa fa-trash"></i> Data progress berhasil dihapus', 'warning');
+			redirect('admin/progress/'.$this->data['id_proyek']);
+			exit;	
+		}
+
+		$this->data['progress']	= $this->progress_m->get(['id_proyek' => $this->data['id_proyek']]);
+		$this->data['title']	= 'Data Progress | ' . $this->title;
+		$this->data['content']	= 'admin/data_progress';
+		$this->template( $this->data, 'admin' );
+
+	}
+
+	public function tambah_progress() {
+
+		$this->load->model( 'progress_m' );
+
+		$this->data['id_proyek'] = $this->uri->segment(3);
+
+		if ( !isset( $this->data['id_proyek'] ) ) {
+
+			$this->flashmsg( 'Required parameter is missing', 'danger' );
+			redirect( 'admin/proyek/');
+			exit;
+
+		}
+
+		if ( $this->POST( 'submit' ) ) {
+
+			$this->data['progress'] = [
+				'id_proyek'			=> $this->data['id_proyek'],
+				'serapan_anggaran'	=> $this->POST( 'serapan_anggaran' ),
+				'periode'			=> $this->POST( 'periode' )
+			];
+
+			$this->progress_m->insert( $this->data['progress'] );
+			$this->flashmsg( 'Data berhasil disimpan' );
+			redirect( 'admin/progress/'.$this->data['id_proyek'] );
+			exit;
+
+		}
+
+		$this->data['id_proyek']= $this->data['id_proyek'];
+		$this->data['title']	= 'Tambah Progress | ' . $this->title;
+		$this->data['content']	= 'admin/tambah_progress';
+		$this->template( $this->data, 'admin' );
+
+	}
+
+	public function edit_progress() {
+
+		$this->load->model( 'progress_m' );
+
+		$this->data['id_progress']	= $this->uri->segment( 3 );
+		$this->data['progress']		= $this->progress_m->get_row([ 'id_progress' => $this->data['id_progress'] ]);
+
+		$this->data['id_proyek'] = $this->data['progress']->id_proyek;
+
+		if ( !isset( $this->data['id_progress'] ) ) {
+
+			$this->flashmsg( 'Required parameter is missing', 'danger' );
+			redirect( 'admin/detail-proyek/'.$id_proyek );
+			exit;
+
+		}
+
+		$this->load->model( 'progress_m' );
+		if ( !isset( $this->data['progress'] ) ) {
+
+			$this->flashmsg( 'Data tidak ditemukan', 'danger' );
+			redirect( 'admin/detail-proyek/'.$id_proyek );
+			exit;			
+
+		}
+
+		if ( $this->POST( 'submit' ) ) {
+
+			$this->data['progress'] = [
+				'serapan_anggaran'	=> $this->POST( 'serapan_anggaran' ),
+				'periode'			=> $this->POST( 'periode' )
+			];
+
+			$this->progress_m->update( $this->data['id_progress'], $this->data['progress'] );
+			$this->flashmsg( 'Data berhasil diedit' );
+			redirect( 'admin/progress/' . $this->data['id_proyek'] );
+			exit;
+
+		}
+
+
+		$this->data['title']	= 'Edit Progress | ' . $this->title;
+		$this->data['content']	= 'admin/edit_progress';
+		$this->template( $this->data, 'admin' );
+
+	}
 }

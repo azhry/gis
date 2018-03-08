@@ -72,6 +72,10 @@
                                 <input type="number" class="form-control" required name="persentase_penyelesaian" min="0" max="100">
                             </div>
                             <div class="form-group">
+                                <label for="tanggal_selesai">Tanggal Mulai</label>
+                                <input data-plugin="datepicker" type="text" class="datepicker form-control" required name="tanggal_mulai">
+                            </div>
+                            <div class="form-group">
                                 <label for="tanggal_selesai">Tanggal Selesai</label>
                                 <input data-plugin="datepicker" type="text" class="datepicker form-control" required name="tanggal_selesai">
                             </div>

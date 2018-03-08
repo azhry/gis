@@ -15,12 +15,20 @@
                 <div class="panel-actions"></div>
                 <h3 class="panel-title">Detail Proyek</h3>
             </header>
-            <div class="panel-body">
+            <div class="panel-body">      
+                <div>
+                    <a href="<?= base_url('admin/progress/'.$proyek->id) ?>" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Data Progress</a>
+                    <a href="<?= base_url('admin/tambah_progress/'.$proyek->id) ?>" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Progress</a><!-- 
+                    <a href="<?= base_url('admin/edit_progress') ?>" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit Progress</a> -->
+                </div>
+                <hr>
+
                 <?= $this->session->flashdata('msg') ?>
                 <div id="map" style="width: 100%; height: 500px;"></div>
                 
                 <div class="row row-lg">
                     <div class="col-md-4">
+
                         <center>
                             <img src="<?= base_url('img/' . $proyek->id . '.jpg') ?>" class="img-thumbnail" width="200" height="200">
                         </center>
