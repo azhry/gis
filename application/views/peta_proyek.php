@@ -112,6 +112,8 @@
                 suppressMarkers: true
             });
 
+            <?php $progress = $this->progress_m->get_progress( $row->id ); ?>
+            
             directionService.route(request_<?= $row->id ?>, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionDisplay_<?= $row->id ?>.setDirections(response);
@@ -121,7 +123,7 @@
                         '<td onclick="mapFocus(\'<?= $row->latitude ?>\', \'<?= $row->longitude ?>\')"><?= $row->namobj ?></td>' +
                         '<td>' + (response.routes[0].legs[0].distance.value / 1000).toString().replace( '.', ',' ) + ' km</td>' +
                         '<td><?= $row->nama_kabupaten ?></td>' +
-                        '<td><?= 'Rp ' . number_format($row->biaya, 0, ',', '.') ?></td>' +
+                        '<td><?= 'Rp ' . number_format($row->anggaran, 0, ',', '.') ?></td>' +
                     '</tr>');
 
                     var infoWindow_<?= $row->id ?> = new google.maps.InfoWindow({
@@ -152,7 +154,7 @@
                                         '</tr>' +
                                         '<tr>' +
                                             '<td><strong>Dana</strong></td>' +
-                                            '<td><?= 'Rp ' . number_format($row->biaya, 0, ',', '.') ?></td>' +
+                                            '<td><?= 'Rp ' . number_format($row->anggaran, 0, ',', '.') ?></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td><strong>Akan selesai dalam</strong></td>' +
@@ -160,8 +162,8 @@
                                         '</tr>' +
                                     '</table>' +
                                     '<div class="progress">' +
-                                        '<div class="progress-bar" role="progressbar" aria-valuenow="<?= $row->persentase_penyelesaian ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $row->persentase_penyelesaian ?>%">' +
-                                            '<?= $row->persentase_penyelesaian ?>%' +
+                                        '<div class="progress-bar" role="progressbar" aria-valuenow="<?= count( $progress ) > 0 ? $progress[ count( $progress ) - 1 ]->progress : 0 ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= count( $progress ) > 0 ? $progress[ count( $progress ) - 1 ]->progress : 0 ?>%">' +
+                                            '<?= count( $progress ) > 0 ? $progress[ count( $progress ) - 1 ]->progress : 0 ?>%' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +

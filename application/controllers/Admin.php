@@ -28,11 +28,9 @@ class Admin extends MY_Controller
 		$this->load->model('pegawai_m');
 		$this->load->model('proyek_m');
 		$this->load->model('kabupaten_m');
-		$this->load->model('provinsi_m');
 		$this->data['pegawai']	= $this->pegawai_m->get();
 		$this->data['proyek']	= $this->proyek_m->get();
 		$this->data['kabupaten']= $this->kabupaten_m->get();
-		$this->data['provinsi']	= $this->provinsi_m->get();
 		$this->data['title'] 	= 'Dashboard | ' . $this->title;
 		$this->data['content']	= 'admin/dashboard';
 		$this->template($this->data);
