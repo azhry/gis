@@ -65,10 +65,10 @@
                                 Latitude: <input class="form-control" type="text" id="map-add-hidden_latitude" name="latitude" required><br>
                                 Longitude: <input class="form-control" type="text" id="map-add-hidden_longitude" name="longitude" required>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="foto">Upload Foto Proyek<span class="required">*</span></label>
                                 <input type="file" name="foto">
-                            </div>
+                            </div> -->
                             <input type="submit" value="Submit" name="submit" class="btn btn-primary">
                         <?= form_close() ?>
                     </div>

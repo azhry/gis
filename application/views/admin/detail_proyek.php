@@ -27,12 +27,12 @@
                 <div id="map" style="width: 100%; height: 500px;"></div>
                 
                 <div class="row row-lg">
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
 
                         <center>
                             <img src="<?= base_url('img/' . $proyek->id . '.jpg') ?>" class="img-thumbnail" width="200" height="200">
                         </center>
-                    </div>
+                    </div> -->
                     <div class="col-md-8">
                         <!-- Example Basic -->
                         <div class="example-wrap">
@@ -163,7 +163,6 @@
       var contentString = '<div id="content">'+
         '<div id="siteNotice">'+
         '</div>'+
-        '<h5 id="firstHeading" class="firstHeading"><?= $proyek->kl_dat_das ?></h5>'+
         '<div id="bodyContent">'+
         '<p><?= $proyek->namobj ?></p>'+
         '<img width="100" height="100" src="<?= base_url('img/' . $proyek->id . '.jpg') ?>" />'+

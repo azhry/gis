@@ -28,10 +28,10 @@
                                 <label for="Namobj">Nama Proyek<span class="required">*</span></label>
                                 <input type="text" class="form-control" value="<?= $proyek->namobj ?>" name="namobj" required>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="Kl_dat_das">Kl_dat_das<span class="required">*</span></label>
                                 <input type="text" class="form-control" value="<?= $proyek->kl_dat_das ?>" name="kl_dat_das" required>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="thn_data">Tahun Data<span class="required">*</span></label>
                                 <input type="number" class="form-control" value="<?= $proyek->thn_data ?>" name="thn_data" required>
@@ -73,13 +73,13 @@
                                 <label for="tanggal_selesai">Tanggal Selesai</label>
                                 <input data-plugin="datepicker" value="<?= count($waktu) > 1 ? $waktu[0] : '-'  ?>" type="text" class="datepicker form-control" required name="tanggal_selesai">
                             </div>
-                            <div id="img-placeholder">
+                            <!-- <div id="img-placeholder">
                                 <img src="<?= base_url( 'img/' . $proyek->id . '.jpg' ) ?>" onerror="this.src = '<?= base_url('img/150x150.png') ?>'" width="150" height="150">
-                            </div>
-                            <div class="form-group">
+                            </div> -->
+                            <!-- <div class="form-group">
                                 <label for="foto">Upload Foto Proyek<span class="required">*</span></label>
                                 <input type="file" name="foto">
-                            </div>
+                            </div> -->
                             <input type="submit" value="Submit" name="submit" class="btn btn-primary">
                         <?= form_close() ?>
                     </div>

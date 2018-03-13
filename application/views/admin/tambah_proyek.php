@@ -28,10 +28,10 @@
                                 <label for="Namobj">Nama Proyek<span class="required">*</span></label>
                                 <input type="text" class="form-control" name="namobj" required>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="Kl_dat_das">Kl_dat_das<span class="required">*</span></label>
                                 <input type="text" class="form-control" name="kl_dat_das" required>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="thn_data">Tahun Data<span class="required">*</span></label>
                                 <input type="number" class="form-control" name="thn_data" required>
@@ -72,10 +72,10 @@
                                 <label for="tanggal_selesai">Tanggal Selesai</label>
                                 <input data-plugin="datepicker" type="text" class="datepicker form-control" required name="tanggal_selesai">
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="foto">Upload Foto Proyek<span class="required">*</span></label>
                                 <input type="file" name="foto">
-                            </div>
+                            </div> -->
                             <input type="submit" value="Submit" name="submit" class="btn btn-primary">
                         <?= form_close() ?>
                     </div>
