@@ -101,12 +101,7 @@
                     var infoWindow_<?= $row->id ?> = new google.maps.InfoWindow({
                         content: '<div id="content">'+
                             '<div class="row">' +
-                                '<div class="col-md-4">' +
-                                    '<center>' +
-                                        '<img class="img-thumbnail" width="100" height="100" src="<?= base_url('img/' . $row->id . '.jpg') ?>" />'+
-                                    '</center>' +
-                                '</div>' +
-                                '<div class="col-md-8">' +
+                                '<div class="col-md-8 col-md-offset-2">' +
                                     '<table class="table table-bordered">' +
                                         '<tr>' +
                                             '<td><strong>Nama Proyek</strong></td>' +

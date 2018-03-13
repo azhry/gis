@@ -26,15 +26,14 @@
                         </div>
                         <div class="col-md-6">
                             <h3 class="text-center">
-                                Direktorat Jendral Cipta Karya<br>
-                                Kementrian Pekerjaan Umum dan Perumahan Rakyat
+                                Jendral Cipta Karya Satuan Kerja Pengendalian dan Program Infrastruktur  Permukiman Rakyat Provinsi Bengkulu
                             </h3>
                             <h3 class="text-center"></h3>
                         </div>
                         <div class="col-md-3">
-                            <center>
+                            <!-- <center>
                                 <img src="<?= base_url( 'img/logo.jpg' ) ?>" width="100" height="100">
-                            </center>
+                            </center> -->
                         </div>
                     </div>
                   <div class="row row-lg">

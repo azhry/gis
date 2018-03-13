@@ -17,7 +17,7 @@
       </button>
       <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
         <img class="navbar-brand-logo" src="<?= base_url('img') ?>/logo.jpg" width="30" >
-        <span class="navbar-brand-text"> SI Geografis</span>
+        <span class="navbar-brand-text"> SI Pemetaan</span>
       </div>
     </div>
 

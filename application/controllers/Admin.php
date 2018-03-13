@@ -540,6 +540,12 @@ class Admin extends MY_Controller
 
 		if ($this->POST('simpan'))
 		{
+			$kab = $this->POST('id_kabupaten');
+			if($kab == "Pilih Kabupaten"){
+				$this->flashmsg( 'Lengkapi data sebelum disimpan!', 'danger' );
+				redirect('admin/kecamatan');
+				exit;
+			}
 
 			$this->data['kecamatan'] = [
 				'nama'		=> $this->POST('nama'),

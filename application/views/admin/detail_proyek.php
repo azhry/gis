@@ -165,7 +165,6 @@
         '</div>'+
         '<div id="bodyContent">'+
         '<p><?= $proyek->namobj ?></p>'+
-        '<img width="100" height="100" src="<?= base_url('img/' . $proyek->id . '.jpg') ?>" />'+
         '</div>'+
         '</div>';
       var infoWindow = new google.maps.InfoWindow({
