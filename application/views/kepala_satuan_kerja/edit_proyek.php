@@ -61,13 +61,13 @@
                                 Latitude: <input class="form-control" type="text" id="map-add-hidden_latitude" name="latitude" value="<?= $proyek->latitude ?>" required><br>
                                 Longitude: <input class="form-control" type="text" id="map-add-hidden_longitude" value="<?= $proyek->longitude ?>" name="longitude" required>
                             </div>
-                            <div id="img-placeholder">
+                            <!-- <div id="img-placeholder">
                                 <img src="<?= base_url( 'img/' . $proyek->id . '.jpg' ) ?>" onerror="this.src = '<?= base_url('img/150x150.png') ?>'" width="150" height="150">
-                            </div>
-                            <div class="form-group">
+                            </div> -->
+                            <!-- <div class="form-group">
                                 <label for="foto">Upload Foto Proyek<span class="required">*</span></label>
                                 <input type="file" name="foto">
-                            </div>
+                            </div> -->
                             <input type="submit" value="Submit" name="submit" class="btn btn-primary">
                         <?= form_close() ?>
                     </div>

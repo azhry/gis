@@ -63,7 +63,6 @@ class Kepala_satuan_kerja extends MY_Controller
 
 			$this->data['proyek'] = [
 				'namobj'		=> $this->POST('namobj'),
-				'kl_dat_das'	=> $this->POST('kl_dat_das'),
 				'thn_data'		=> $this->POST('thn_data'),
 				'id_provinsi'	=> $this->POST('id_provinsi'),
 				'id_kabupaten'	=> $this->POST('id_kabupaten'),
@@ -74,7 +73,7 @@ class Kepala_satuan_kerja extends MY_Controller
 			];
 
 			$this->proyek_m->insert($this->data['proyek']);
-			$this->upload($this->db->insert_id(), '../img', 'foto');
+			// $this->upload($this->db->insert_id(), '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data proyek baru berhasil disimpan');
 			redirect('kepala_satuan_kerja/proyek');
@@ -113,7 +112,6 @@ class Kepala_satuan_kerja extends MY_Controller
 		{
 			$this->data['proyek'] = [
 				'namobj'		=> $this->POST('namobj'),
-				'kl_dat_das'	=> $this->POST('kl_dat_das'),
 				'thn_data'		=> $this->POST('thn_data'),
 				'id_provinsi'	=> $this->POST('id_provinsi'),
 				'id_kabupaten'	=> $this->POST('id_kabupaten'),
@@ -124,7 +122,7 @@ class Kepala_satuan_kerja extends MY_Controller
 			];
 
 			$this->proyek_m->update($this->data['id_data'], $this->data['proyek']);
-			$this->upload($this->data['id_data'], '../img', 'foto');
+			// $this->upload($this->data['id_data'], '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data proyek berhasil diedit');
 			redirect('kepala_satuan_kerja/edit-proyek/' . $this->data['id_data']);

@@ -22,8 +22,8 @@
                 <table class="table table-hover dataTable table-striped width-full" data-plugin="dataTable">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Foto</th>
+                            <th>No</th><!-- 
+                            <th>Foto</th> -->
                             <th>Nama Proyek</th>
                             <th>Kabupaten</th>
                             <th>Aksi</th>
@@ -33,9 +33,9 @@
                         <?php $i=1; foreach($proyek as $row): ?>
                         <tr>
                             <td><?= $i ?></td>
-                            <td>
+                            <!-- <td>
                                 <img src="<?= base_url('img/' . $row->id . '.jpg') ?>" width="100" height="100" onerror="this.src = 'http://placehold.it/100x100'">
-                            </td>
+                            </td> -->
                             <td><?= $row->namobj ?></td>
                             <td><?= $row->nama_kabupaten ?></td>
                             <td>

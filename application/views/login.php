@@ -62,8 +62,8 @@
     <div class="page-content vertical-align-middle">
       <div class="brand">
         <img class="brand-img" src="<?= base_url('img') ?>/logo.jpg" alt="KemenPUPR" width="100" height="100">
-        <h2 class="brand-text">Sistem Informasi Geografis</h2>
-        <p>Kementrian Pekerjaan Umum dan Perumahan Rakyat</p>
+        <h2 class="brand-text">Sistem Informasi Pemetaan Proyek</h2>
+        <p>Direktorat Jendral Pekerjaan Umum dan Perumahan Rakyat <br>Jendral Cipta Karya Satuan Kerja Pengendalian <br>dan Program Infrastruktur  Permukiman Rakyat <br>Provinsi Bengkulu</p>
       </div>
       <p>Login into your account.</p>
       <?= form_open('login/login_process') ?>

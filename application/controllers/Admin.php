@@ -194,7 +194,6 @@ class Admin extends MY_Controller
 
 			$this->data['proyek'] = [
 				'namobj'					=> $this->POST('namobj'),
-				'kl_dat_das'				=> $this->POST('kl_dat_das'),
 				'thn_data'					=> $this->POST('thn_data'),
 				'id_kecamatan'				=> $this->POST( 'id_kecamatan' ),
 				'id_kabupaten'				=> $this->POST('id_kabupaten'),
@@ -207,7 +206,7 @@ class Admin extends MY_Controller
 			];
 
 			$this->proyek_m->insert($this->data['proyek']);
-			$this->upload($this->db->insert_id(), '../img', 'foto');
+			// $this->upload($this->db->insert_id(), '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data proyek baru berhasil disimpan');
 			redirect('admin/proyek');
@@ -253,7 +252,6 @@ class Admin extends MY_Controller
 		{
 			$this->data['proyek'] = [
 				'namobj'					=> $this->POST('namobj'),
-				'kl_dat_das'				=> $this->POST('kl_dat_das'),
 				'thn_data'					=> $this->POST('thn_data'),
 				'id_kecamatan'				=> $this->POST('id_kecamatan'),
 				'id_kabupaten'				=> $this->POST('id_kabupaten'),
@@ -266,7 +264,7 @@ class Admin extends MY_Controller
 			];
 
 			$this->proyek_m->update($this->data['id_data'], $this->data['proyek']);
-			$this->upload($this->data['id_data'], '../img', 'foto');
+			// $this->upload($this->data['id_data'], '../img', 'foto');
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data proyek berhasil diedit');
 			redirect('admin/edit-proyek/' . $this->data['id_data']);
@@ -542,6 +540,12 @@ class Admin extends MY_Controller
 
 		if ($this->POST('simpan'))
 		{
+			$kab = $this->POST('id_kabupaten');
+			if($kab == "Pilih Kabupaten"){
+				$this->flashmsg( 'Lengkapi data sebelum disimpan!', 'danger' );
+				redirect('admin/kecamatan');
+				exit;
+			}
 
 			$this->data['kecamatan'] = [
 				'nama'		=> $this->POST('nama'),

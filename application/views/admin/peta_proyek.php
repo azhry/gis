@@ -42,10 +42,9 @@
                 content: '<div id="content">'+
                     '<div id="siteNotice">'+
                     '</div>'+
-                    '<h5 id="firstHeading" class="firstHeading"><?= $row->kl_dat_das ?></h5>'+
                     '<div id="bodyContent">'+
                     '<p><?= $row->namobj ?></p>'+
-                    '<img width="100" height="100" src="<?= base_url('img/' . $row->id . '.jpg') ?>" />'+
+                    // '<img width="100" height="100" src="<?= base_url('img/' . $row->id . '.jpg') ?>" />'+
                     '</div>'+
                     '</div>'
             });
