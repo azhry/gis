@@ -19,11 +19,10 @@
                 <br><br>
                 <div class="row">
                     <div class="col-md-8">
-                        <h4>Jarak lokasi proyek dari kota Bengkulu <span id="btn-container"><button id="download-btn" class="btn btn-primary btn-sm" onclick="saveReport();" type="button"><i class="fa fa-download"></i> Download Laporan</button></span></h4>
+                        <!-- <h4>Jarak lokasi proyek dari kota Bengkulu <span id="btn-container"><button id="download-btn" class="btn btn-primary btn-sm" onclick="saveReport();" type="button"><i class="fa fa-download"></i> Download Laporan</button></span></h4>
                         <table class="table table-bordered table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>Icon</th>
                                     <th>Nama Proyek</th>
                                     <th>Jarak</th>
                                     <th>Kabupaten</th>
@@ -31,6 +30,36 @@
                                 </tr>
                             </thead>
                             <tbody id="jarak-wrapper"></tbody>
+                        </table> -->
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Icon</th>
+                                    <th>Range Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png">
+                                    </td>
+                                    <td>0 - 35%</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png">
+                                    </td>
+                                    <td>36 - 75%</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png">
+                                    </td>
+                                    <td>76 - 100%</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -63,10 +92,22 @@
         });
 
         <?php foreach ($proyek as $row): ?>
+            <?php $progress = $this->progress_m->get_progress( $row->id ); ?>
+
             var marker_<?= $row->id ?> = new google.maps.Marker({
                 position: {lat: <?= $row->latitude ?>, lng: <?= $row->longitude ?>},
                 map: map,
-                icon: 'http://maps.google.com/mapfiles/kml/pal2/icon<?= $row->id % 63 ?>.png'
+                <?php if ( count( $progress ) > 0 ): ?>
+                    <?php if ( $progress[count( $progress ) - 1]->progress >= 0 && $progress[count( $progress ) - 1]->progress <= 35 ): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                    <?php elseif ( $progress[count( $progress ) - 1]->progress > 35 && $progress[count( $progress ) - 1]->progress <= 75 ): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                    <?php elseif ( $progress[count( $progress ) - 1]->progress > 75 ): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                    <?php endif; ?>
+                <?php else: ?>
+                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                <?php endif; ?>
             });
 
             var destination_<?= $row->id ?> = new google.maps.LatLng(<?= $row->latitude ?>, <?= $row->longitude ?>);
@@ -91,7 +132,7 @@
                     directionDisplay_<?= $row->id ?>.setDirections(response);
                     directionDisplay_<?= $row->id ?>.setMap(map);
                     $( '#jarak-wrapper' ).append('<tr>' + 
-                        '<td><img src="http://maps.google.com/mapfiles/kml/pal2/icon<?= $row->id % 63 ?>.png"></td>' +
+                        // '<td><img src="http://maps.google.com/mapfiles/kml/pal2/icon<?= $row->id % 63 ?>.png"></td>' +
                         '<td onclick="mapFocus(\'<?= $row->latitude ?>\', \'<?= $row->longitude ?>\')"><?= $row->namobj ?></td>' +
                         '<td>' + (response.routes[0].legs[0].distance.value / 1000).toString().replace( '.', ',' ) + ' km</td>' +
                         '<td><?= $row->nama_kabupaten ?></td>' +

@@ -34,7 +34,6 @@
                     <a href="<?= base_url( 'login' ) ?>" class="btn btn-primary">Login</a>
                 </div>
                 <div class="page-content">
-                    <!-- Panel Basic -->
                     <div class="panel">
                         <header class="panel-heading">
                             <div class="panel-actions"></div>
@@ -44,6 +43,38 @@
                             <div id="map" style="width: 100%; height: 600px;"></div>
                             <br><br>
                             <div class="row">
+                                <div class="col-md-4">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Icon</th>
+                                                <th>Range Progress</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png">
+                                                </td>
+                                                <td>0 - 35%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="http://maps.google.com/mapfiles/ms/icons/blue-dot.png">
+                                                </td>
+                                                <td>36 - 75%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png">
+                                                </td>
+                                                <td>76 - 100%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
                                 <div class="col-md-8">
                                     <h4>Jarak lokasi proyek dari kota Bengkulu</h4>
                                     <table class="table table-bordered table-hover table-striped">
@@ -59,7 +90,7 @@
                                         <tbody id="jarak-wrapper"></tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -87,14 +118,27 @@
 
         var marker_bengkulu = new google.maps.Marker({
             position: bengkulu,
-            map: map
+            map: map,
+            // icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
         });
 
         <?php foreach ($proyek as $row): ?>
+            <?php $progress = $this->progress_m->get_progress( $row->id ); ?>
+
             var marker_<?= $row->id ?> = new google.maps.Marker({
                 position: {lat: <?= $row->latitude ?>, lng: <?= $row->longitude ?>},
                 map: map,
-                icon: 'http://maps.google.com/mapfiles/kml/pal2/icon<?= $row->id % 63 ?>.png'
+                <?php if ( count( $progress ) > 0 ): ?>
+                    <?php if ( $progress[count( $progress ) - 1]->progress >= 0 && $progress[count( $progress ) - 1]->progress <= 35 ): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                    <?php elseif ( $progress[count( $progress ) - 1]->progress > 35 && $progress[count( $progress ) - 1]->progress <= 75 ): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                    <?php elseif ( $progress[count( $progress ) - 1]->progress > 75 ): ?>
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                    <?php endif; ?>
+                <?php else: ?>
+                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                <?php endif; ?>
             });
 
             var destination_<?= $row->id ?> = new google.maps.LatLng(<?= $row->latitude ?>, <?= $row->longitude ?>);
@@ -111,8 +155,6 @@
             var directionDisplay_<?= $row->id ?> = new google.maps.DirectionsRenderer({
                 suppressMarkers: true
             });
-
-            <?php $progress = $this->progress_m->get_progress( $row->id ); ?>
             
             directionService.route(request_<?= $row->id ?>, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
