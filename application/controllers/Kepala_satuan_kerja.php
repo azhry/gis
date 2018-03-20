@@ -7,6 +7,7 @@ class Kepala_satuan_kerja extends MY_Controller
 		parent::__construct();
 		$this->data['nip'] 		= $this->session->userdata('nip');
 		$this->data['id_role']	= $this->session->userdata('id_role');
+
 		if (!isset($this->data['nip'], $this->data['id_role']))
 		{
 			$this->session->sess_destroy();
@@ -170,7 +171,7 @@ class Kepala_satuan_kerja extends MY_Controller
 	{
 		$this->load->model( 'proyek_m' );
 		$this->load->model( 'progress_m' );
-		$this->data['proyek']	= $this->proyek_m->get_proyek();
+		$this->data['proyek']	= $this->progress_m->get_progress_each_region();
 		$this->data['title']	= 'Peta Proyek | ' . $this->title;
 		$this->data['content']	= 'kepala_satuan_kerja/peta_proyek';
 		$this->template($this->data);
@@ -213,5 +214,17 @@ class Kepala_satuan_kerja extends MY_Controller
 		$this->data['title']			= 'Data Proyek | ' . $this->title;
 		$this->data['content']			= 'kepala_satuan_kerja/grafik';
 		$this->template($this->data);	
+	}
+
+	public function download_laporan_proyek() {
+
+		$this->load->model('proyek_m');
+		$this->data['proyek'] = $this->proyek_m->get_proyek();
+		$html = $this->load->view('kepala_satuan_kerja/laporan_proyek', $this->data, true);
+		$file_name = date('YmdHis') . ' - Laporan Jalan.pdf';
+		$this->load->library('m_pdf');
+		$this->m_pdf->pdf->WriteHTML($html);
+		$this->m_pdf->pdf->Output($file_name, 'D');
+
 	}
 }

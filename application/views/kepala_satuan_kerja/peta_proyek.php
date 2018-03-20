@@ -31,6 +31,7 @@
                             </thead>
                             <tbody id="jarak-wrapper"></tbody>
                         </table> -->
+                        <a href="<?= base_url( 'kepala-satuan-kerja/download-laporan-proyek' ) ?>" class="btn btn-info pull-right"><i class="fa fa-download"></i> Unduh laporan</a>
                     </div>
                     <div class="col-md-4">
                         <table class="table">
@@ -92,21 +93,17 @@
         });
 
         <?php foreach ($proyek as $row): ?>
-            <?php $progress = $this->progress_m->get_progress( $row->id ); ?>
+            <?php $row = (object)$row; ?>
 
             var marker_<?= $row->id ?> = new google.maps.Marker({
                 position: {lat: <?= $row->latitude ?>, lng: <?= $row->longitude ?>},
                 map: map,
-                <?php if ( count( $progress ) > 0 ): ?>
-                    <?php if ( $progress[count( $progress ) - 1]->progress >= 0 && $progress[count( $progress ) - 1]->progress <= 35 ): ?>
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
-                    <?php elseif ( $progress[count( $progress ) - 1]->progress > 35 && $progress[count( $progress ) - 1]->progress <= 75 ): ?>
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-                    <?php elseif ( $progress[count( $progress ) - 1]->progress > 75 ): ?>
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
-                    <?php endif; ?>
-                <?php else: ?>
+                <?php if ( $row->progress >= 0 && $row->progress <= 35 ): ?>
                 icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                <?php elseif ( $row->progress > 35 && $row->progress <= 75 ): ?>
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                <?php elseif ( $row->progress > 75 ): ?>
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                 <?php endif; ?>
             });
 
@@ -125,7 +122,8 @@
                 suppressMarkers: true
             });
 
-            <?php $progress = $this->progress_m->get_progress( $row->id ); ?>
+            <?php 
+                // $progress = $this->progress_m->get_progress( $row->id ); ?>
 
             directionService.route(request_<?= $row->id ?>, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
@@ -133,56 +131,60 @@
                     directionDisplay_<?= $row->id ?>.setMap(map);
                     $( '#jarak-wrapper' ).append('<tr>' + 
                         // '<td><img src="http://maps.google.com/mapfiles/kml/pal2/icon<?= $row->id % 63 ?>.png"></td>' +
-                        '<td onclick="mapFocus(\'<?= $row->latitude ?>\', \'<?= $row->longitude ?>\')"><?= $row->namobj ?></td>' +
+                        '<td onclick="mapFocus(\'<?= $row->latitude ?>\', \'<?= $row->longitude ?>\')"><?= '$row->namobj' ?></td>' +
                         '<td>' + (response.routes[0].legs[0].distance.value / 1000).toString().replace( '.', ',' ) + ' km</td>' +
-                        '<td><?= $row->nama_kabupaten ?></td>' +
-                        '<td><?= 'Rp ' . number_format($row->anggaran, 0, ',', '.') ?></td>' +
+                        '<td><?= '$row->nama_kabupaten' ?></td>' +
+                        '<td><?= 'Rp ' . 'number_format($row->anggaran, 0, ',', '.')' ?></td>' +
                     '</tr>');
 
                     var infoWindow_<?= $row->id ?> = new google.maps.InfoWindow({
-                        content: '<div id="content">'+
+                        content: '<div id="content" style="height: 400px; overflow-y: scroll; width: 400px !important;">'+
                             '<div class="row">' +
-                                '<div class="col-md-8 col-md-offset-2">' +
+                                '<div class="col-md-8">' +
+                                    <?php foreach ( $row->proyek as $proyek ): ?>
                                     '<table class="table table-bordered">' +
                                         '<tr>' +
                                             '<td><strong>Nama Proyek</strong></td>' +
-                                            '<td><?= $row->namobj ?></td>' +
+                                            '<td><?= $proyek->namobj ?></td>' +
                                         '</tr>' +
-                                        '<tr>' +
-                                            '<td><strong>Jarak</strong></td>' +
-                                            '<td>' + (response.routes[0].legs[0].distance.value / 1000).toString().replace( '.', ',' ) + 'km</td>' +
-                                        '</tr>' +
+                                        // '<tr>' +
+                                        //     '<td><strong>Jarak</strong></td>' +
+                                        //     '<td>' + (response.routes[0].legs[0].distance.value / 1000).toString().replace( '.', ',' ) + 'km</td>' +
+                                        // '</tr>' +
                                         '<tr>' +
                                             '<td><strong>Tahun</strong></td>' +
-                                            '<td><?= $row->thn_data ?></td>' +
+                                            '<td><?= $proyek->thn_data ?></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td><strong>Kabupaten</strong></td>' +
-                                            '<td><?= $row->nama_kabupaten ?></td>' +
+                                            '<td><?= $proyek->nama_kabupaten ?></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td><strong>Dana</strong></td>' +
-                                            '<td><?= 'Rp ' . number_format($row->anggaran, 0, ',', '.') ?></td>' +
+                                            '<td><?= 'Rp ' . number_format($proyek->anggaran, 0, ',', '.') ?></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td><strong>Akan selesai dalam</strong></td>' +
-                                            '<td><?php $waktu = explode(" ", $row->tanggal_selesai);if ( count( $waktu ) > 1 ) {$selesai = new DateTime($waktu[0]);$sekarang = new DateTime(date('Y-m-d'));if ( $sekarang > $selesai ) {echo '0';} else {echo $selesai->diff( $sekarang )->format( '%m bulan' );}}?></td>' +
+                                            '<td><?php $waktu = explode(" ", $proyek->tanggal_selesai);if ( count( $waktu ) > 1 ) {$selesai = new DateTime($waktu[0]);$sekarang = new DateTime(date('Y-m-d'));if ( $sekarang > $selesai ) {echo '0';} else {echo $selesai->diff( $sekarang )->format( '%m bulan' );}}?></td>' +
                                         '</tr>' +
                                     '</table>' +
+                                    <?php endforeach; ?>
                                     '<div class="progress">' +
-                                        '<div class="progress-bar" role="progressbar" aria-valuenow="<?= count( $progress ) > 0 ? $progress[ count( $progress ) - 1 ]->progress : 0 ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= count( $progress ) > 0 ? $progress[ count( $progress ) - 1 ]->progress : 0 ?>%">' +
-                                            '<?= count( $progress ) > 0 ? $progress[ count( $progress ) - 1 ]->progress : 0 ?>%' +
+                                        '<div class="progress-bar" role="progressbar" aria-valuenow="<?= $row->progress ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $row->progress ?>%">' +
+                                            '<?= $row->progress ?>%' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
-                        '</div>'
+                        '</div>',
+                        maxWidth: 600
                     });
                     
                     marker_<?= $row->id ?>.addListener('mouseover', function(event) {
                         infoWindow_<?= $row->id ?>.open(map, this);
                     });
-                    marker_<?= $row->id ?>.addListener('mouseout', function(event) {
+
+                    marker_<?= $row->id ?>.addListener('click', function(event) {
                         infoWindow_<?= $row->id ?>.close();
                     });
                 }

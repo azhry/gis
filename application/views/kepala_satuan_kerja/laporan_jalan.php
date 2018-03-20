@@ -61,7 +61,7 @@
 <body>
 	<div id="bigWrapper">
 		<div class="content" style="margin: 0 auto; width:100%;">
-			<p style="margin-top: -30px; width: 100%; font-weight: bold; font-size: 22px; text-align: center; margin-bottom: 30px;">Laporan Jalan</p>
+			<p style="margin-top: -30px; width: 100%; font-weight: bold; font-size: 22px; text-align: center; margin-bottom: 30px;">Laporan Proyek</p>
 			<table style="width: 100%;">
 				<thead>
 					<tr>
