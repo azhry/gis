@@ -381,6 +381,14 @@ class Admin extends MY_Controller
 				'nama'		=> $this->POST('nama')
 			];
 
+			$cek_data = $this->kabupaten_m->get(['nama' => $this->POST('nama')]);
+
+			if(count($cek_data) > 0){
+				$this->flashmsg('<i class="fa fa-close"></i> Data gagal disimpan karena nama kabupaten sudah ada.', 'danger');
+				redirect('admin/kabupaten');
+				exit;
+			}
+
 			$this->kabupaten_m->insert($this->data['kabupaten']);
 
 			$this->flashmsg('<i class="fa fa-check"></i> Data kabupaten baru berhasil disimpan');
@@ -551,6 +559,14 @@ class Admin extends MY_Controller
 				'nama'		=> $this->POST('nama'),
 				'id_kabupaten'	=> $this->POST( 'id_kabupaten' )
 			];
+
+			$cek_data = $this->kecamatan_m->get(['nama' => $this->POST('nama')]);
+
+			if(count($cek_data) > 0){
+				$this->flashmsg('<i class="fa fa-close"></i> Data gagal disimpan karena nama kecamatan sudah ada.', 'danger');
+				redirect('admin/kecamatan');
+				exit;
+			}
 
 			$this->kecamatan_m->insert($this->data['kecamatan']);
 
