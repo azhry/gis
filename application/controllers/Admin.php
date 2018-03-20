@@ -378,7 +378,9 @@ class Admin extends MY_Controller
 		{
 
 			$this->data['kabupaten'] = [
-				'nama'		=> $this->POST('nama')
+				'nama'		=> $this->POST('nama'),
+				'latitude'	=> $this->POST('latitude'),
+				'longitude'	=> $this->POST('longitude')
 			];
 
 			$cek_data = $this->kabupaten_m->get(['nama' => $this->POST('nama')]);
@@ -399,7 +401,9 @@ class Admin extends MY_Controller
 		if ($this->POST('edit') && $this->POST('id_kabupaten'))
 		{
 			$this->data['kabupaten'] = [
-				'nama'		=> $this->POST('nama')
+				'nama'		=> $this->POST('nama'),
+				'latitude'	=> $this->POST('latitude'),
+				'longitude'	=> $this->POST('longitude')
 			];
 
 			$this->kabupaten_m->update($this->POST('id_kabupaten'), $this->data['kabupaten']);

@@ -66,6 +66,12 @@
                             <label for="Nama">Nama<span class="required">*</span></label>
                             <input type="text" class="form-control" name="nama" required>
                         </div>
+                        <div class="form-group">
+                            <label>Koordinat Kabupaten</label><br>
+                            <div class="gmap" id="map-add" style="width: 100%; height: 450px;"></div>
+                            Latitude: <input step="any" class="form-control coord-input" type="number" id="map-add-hidden_latitude" name="latitude" required><br>
+                            Longitude: <input step="any" class="form-control coord-input" type="number" id="map-add-hidden_longitude" name="longitude" required>
+                        </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -90,6 +96,12 @@
                             <label for="Nama">Nama<span class="required">*</span></label>
                             <input type="text" class="form-control" name="nama" required id="nama">
                         </div>
+                        <div class="form-group">
+                            <label>Koordinat Kabupaten</label><br>
+                            <div class="gmap" id="map-edit" style="width: 100%; height: 450px;"></div>
+                            Latitude: <input step="any" class="form-control coord-input" type="number" id="map-edit-hidden_latitude" name="latitude" required><br>
+                            Longitude: <input step="any" class="form-control coord-input" type="number" id="map-edit-hidden_longitude" name="longitude" required>
+                        </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -102,13 +114,38 @@
 </div>
 
             <script>
+                var bengkulu = new google.maps.LatLng(-3.793703, 102.270013);
+                var map = new google.maps.Map(document.getElementById( 'map-add' ), {
+                    zoom: 12,
+                    center: bengkulu
+                });
+                var marker = new google.maps.Marker({
+                    position: bengkulu,
+                    map: map
+                });
+
                 $(document).ready(function() {
                     $('#datatable').DataTable({
                         responsive: true
                     });
 
                     $('#add').on('shown.bs.modal', function() {
-                      initMap('map-add');
+
+                        initMap( 'map-add', map, marker );
+                        $( '#map-add-hidden_latitude, #map-add-hidden_longitude' ).keypress(function() {
+                            var lat = $( '#map-add-hidden_latitude' ).val();
+                            var lng = $( '#map-add-hidden_longitude' ).val();
+
+                            var latLng = new google.maps.LatLng( lat, lng );
+                            marker.setPosition( latLng );
+                            map.setCenter( latLng );
+                        });
+
+                    });
+
+                    $('#edit').on('shown.bs.modal', function() {
+
+
                     });
                 });
 
@@ -118,6 +155,23 @@
 
                 function edit_data(){
                   $("#edit_data").submit();
+                }
+
+                function initMap(id, maps, markers) {
+                    $('#' + id + '-latitude').text('');
+                    $('#' + id + '-longitude').text('');
+                    $('#' + id + '-hidden_latitude').val(null);
+                    $('#' + id + '-hidden_longitude').val(null);
+                    
+                    google.maps.event.addListener(maps, 'click', function(event){
+                        var latLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+                        markers.setPosition(latLng);
+                        $('#' + id + '-hidden_latitude').val(event.latLng.lat());
+                        $('#' + id + '-hidden_longitude').val(event.latLng.lng());
+                    });
+                    google.maps.event.addListener(maps, 'mousemove', function(event){
+                        maps.setOptions({draggableCursor: 'pointer'});
+                    });
                 }
 
                 function get_kabupaten(id_kabupaten) {
@@ -130,8 +184,30 @@
                     },
                     success: function(response) {
                         var json = $.parseJSON(response);
+                        
+                        var coord = new google.maps.LatLng(json.latitude, json.longitude);
+                        var map2 = new google.maps.Map(document.getElementById( 'map-edit' ), {
+                            zoom: 12,
+                            center: coord
+                        });
+                        var marker2 = new google.maps.Marker({
+                            position: coord,
+                            map: map2
+                        });
+                        initMap( 'map-edit', map2, marker2 );
+                        $( '#map-edit-hidden_latitude, #map-edit-hidden_longitude' ).keypress(function() {
+                            var lat = $( '#map-edit-hidden_latitude' ).val();
+                            var lng = $( '#map-edit-hidden_longitude' ).val();
+
+                            var latLng = new google.maps.LatLng( lat, lng );
+                            marker2.setPosition( latLng );
+                            map2.setCenter( latLng );
+                        });
+
                         $('#id_kabupaten').val(json.id_kabupaten);
                         $('#nama').val(json.nama);
+                        $('#map-edit-hidden_latitude').val(json.latitude);
+                        $('#map-edit-hidden_longitude').val(json.longitude);
                     },
                     error: function(e) {
                       console.log(e.responseText);
