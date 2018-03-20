@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2018 at 05:12 AM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Generation Time: Mar 20, 2018 at 11:44 PM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,16 +30,18 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `kabupaten` (
   `id_kabupaten` int(11) NOT NULL,
-  `nama` text NOT NULL
+  `nama` text NOT NULL,
+  `latitude` double NOT NULL DEFAULT '0',
+  `longitude` double NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kabupaten`
 --
 
-INSERT INTO `kabupaten` (`id_kabupaten`, `nama`) VALUES
-(1, 'Bengkulu Selatan'),
-(2, 'Bengkulu Utara');
+INSERT INTO `kabupaten` (`id_kabupaten`, `nama`, `latitude`, `longitude`) VALUES
+(1, 'Bengkulu Selatan', -4.302588238787831, 103.07723605322269),
+(2, 'Bengkulu Utara', -3.266325, 103.07723605322269);
 
 -- --------------------------------------------------------
 
@@ -115,6 +117,7 @@ INSERT INTO `progress` (`id_progress`, `id_proyek`, `serapan_anggaran`, `periode
 
 CREATE TABLE `proyek` (
   `id` int(11) NOT NULL,
+  `kl_dat_das` varchar(225) NOT NULL,
   `namobj` text NOT NULL,
   `thn_data` int(4) NOT NULL,
   `id_kabupaten` int(11) NOT NULL,
@@ -131,11 +134,11 @@ CREATE TABLE `proyek` (
 -- Dumping data for table `proyek`
 --
 
-INSERT INTO `proyek` (`id`, `namobj`, `thn_data`, `id_kabupaten`, `id_kecamatan`, `vol`, `anggaran`, `longitude`, `latitude`, `tanggal_mulai`, `tanggal_selesai`) VALUES
-(6, 'rklterklj', 2018, 1, 1, 'werewj', 342, 107.633056640625, -6.871892962887516, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
-(7, 'Hehe', 2020, 1, 1, 'Hehe', 324, 104.7711181640625, -2.9869273933348635, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
-(8, 'Pembangunan Drainase Volume = 838 M dan Pekerjaan Bak Kontrol dan Kotak Sampah , Volume = 7 Unit, Kelurahan Kota Medan Kecamtan Kota Manna,', 2017, 2, 2, '6 ds/KEL', 500000000, 104.05803680419922, -5.069057826784033, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
-(9, 'Test', 2018, 1, 1, '2', 1000, 102.33730425976569, -3.8526230974660423, '2018-03-07 10:04:40', '2018-07-27 17:00:00');
+INSERT INTO `proyek` (`id`, `kl_dat_das`, `namobj`, `thn_data`, `id_kabupaten`, `id_kecamatan`, `vol`, `anggaran`, `longitude`, `latitude`, `tanggal_mulai`, `tanggal_selesai`) VALUES
+(6, 'ekjkewlrj', 'rklterklj', 2018, 1, 1, 'werewj', 342, 107.633056640625, -6.871892962887516, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
+(7, 'hehe', 'Hehe', 2020, 1, 1, 'Hehe', 324, 104.7711181640625, -2.9869273933348635, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
+(8, 'Bengkulu Selatan', 'Pembangunan Drainase Volume = 838 M dan Pekerjaan Bak Kontrol dan Kotak Sampah , Volume = 7 Unit, Kelurahan Kota Medan Kecamtan Kota Manna,', 2017, 2, 2, '6 ds/KEL', 500000000, 104.05803680419922, -5.069057826784033, '2018-03-07 10:04:40', '2018-02-25 12:13:13'),
+(9, 'Test', 'Test', 2018, 1, 1, '2', 1000, 102.33730425976569, -3.8526230974660423, '2018-03-07 10:04:40', '2018-07-27 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -211,26 +214,31 @@ ALTER TABLE `role`
 --
 ALTER TABLE `kabupaten`
   MODIFY `id_kabupaten` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `kecamatan`
 --
 ALTER TABLE `kecamatan`
-  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kecamatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `progress`
 --
 ALTER TABLE `progress`
-  MODIFY `id_progress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_progress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `proyek`
 --
 ALTER TABLE `proyek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
   MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- Constraints for dumped tables
 --
