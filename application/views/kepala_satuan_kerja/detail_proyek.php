@@ -19,73 +19,70 @@
                 <?= $this->session->flashdata('msg') ?>
                 <div id="map" style="width: 100%; height: 500px;"></div>
                 
-                <div class="row row-lg">
-                    <!-- <div class="col-md-4">
-                        <center>
-                            <img src="<?= base_url('img/' . $proyek->id . '.jpg') ?>" class="img-thumbnail" width="200" height="200">
-                        </center>
-                    </div> -->
-                    <div class="col-md-8">
-                        <!-- Example Basic -->
-                        <div class="example-wrap">
-                            <div class="example table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                        <!-- <tr>
-                                            <th>kl_dat_das</th>
-                                            <td><?= $proyek->kl_dat_das ?></td>
-                                        </tr> -->
-                                        <tr>
-                                            <th>Nama Proyek</th>
-                                            <td><?= $proyek->namobj ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Tahun Data</th>
-                                            <td><?= $proyek->thn_data ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Kabupaten</th>
-                                            <td><?= $proyek->nama_kabupaten ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Kecamatan</th>
-                                            <td><?= $proyek->nama_kecamatan ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Vol</th>
-                                            <td><?= $proyek->vol ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Anggaran Biaya</th>
-                                            <td><?= 'Rp ' . number_format($proyek->anggaran, 0, ',', '.') ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Tanggal Mulai</th>
-                                            <td><?= $proyek->tanggal_mulai ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Tanggal Selesai</th>
-                                            <td><?= $proyek->tanggal_selesai ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Longitude</th>
-                                            <td><?= $proyek->longitude ?></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Latitude</th>
-                                            <td><?= $proyek->latitude ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                <div id="print-area">
+                    <div class="row row-lg">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="example-wrap">
+                                <div class="example table-responsive">
+                                    <table width="500" class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th>Nama Proyek</th>
+                                                <td><?= $proyek->namobj ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tahun Data</th>
+                                                <td><?= $proyek->thn_data ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Kabupaten</th>
+                                                <td><?= $proyek->nama_kabupaten ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Kecamatan</th>
+                                                <td><?= $proyek->nama_kecamatan ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Vol</th>
+                                                <td><?= $proyek->vol ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Anggaran Biaya</th>
+                                                <td><?= 'Rp ' . number_format($proyek->anggaran, 0, ',', '.') ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tanggal Mulai</th>
+                                                <td><?= $proyek->tanggal_mulai ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tanggal Selesai</th>
+                                                <td><?= $proyek->tanggal_selesai ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Longitude</th>
+                                                <td><?= $proyek->longitude ?></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Latitude</th>
+                                                <td><?= $proyek->latitude ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                        <!-- End Example Basic -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <h3>Grafik</h3>
+                            <canvas id="proyek" height="220"></canvas>
+                        </div>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div>
-                        <h3>Grafik</h3>
-                        <canvas id="proyek" height="120"></canvas>
+                    <div class="col-md-12">
+                        <button id="unduh-laporan" type="button" class="btn btn-success"><i class="fa fa-download"></i> Unduh Laporan</button>
                     </div>
                 </div>
             </div>
@@ -93,11 +90,37 @@
     </div>
 </div>
 
+<script type="text/javascript" src="<?= base_url( 'assets/js/jspdf.min.js' ) ?>"></script>
+<script type="text/javascript" src="<?= base_url( 'assets/js/html2canvas.js' ) ?>"></script>
 <script type="text/javascript" src="<?= base_url('assets/js/plugins/Chart.min.js') ?>"></script>
 
   <script type="text/javascript">
+    function downloadPDF2() {
+        var newCanvas = document.querySelector('#print-area');
+        html2canvas(newCanvas)
+        .then(canvas => {
+            //create image from dummy canvas
+            var newCanvasImg = canvas.toDataURL("image/png", 1.0);
+          
+            //creates PDF from img
+            var doc = new jsPDF('portrait', "pt", "a4");
+            var width = doc.internal.pageSize.width;    
+            var height = doc.internal.pageSize.height;
+            doc.setFontSize(20);
+            doc.addImage(newCanvasImg, 'PNG', 0, 0, width, height);
+            doc.save('laporan.pdf');
+            $( '#unduh-laporan' ).prop( 'disabled', false );
+        });
+     }
     $(document).ready(function() {
       initMap();
+
+        $( '#unduh-laporan' ).on('click', function(){
+
+            $( this ).prop( 'disabled', true );
+            downloadPDF2();
+
+        });
 
       var lineChart = document.getElementById('proyek').getContext('2d');
       new Chart(lineChart, {
