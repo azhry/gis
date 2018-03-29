@@ -137,8 +137,8 @@
                 pointBackgroundColor: "rgba(26,179,148,0.5)",
                 pointBorderColor: "rgba(26,179,148,0.8)",
                 data: [
-                    <?php foreach ( $progress as $row ): ?>
-                    '<?= $row->progress ?>', 
+                    <?php $current_progress = 0; foreach ( $progress as $row ): $current_progress += $row->progress; ?>
+                    '<?= $current_progress ?>', 
                     <?php endforeach; ?>
                 ]
             }],

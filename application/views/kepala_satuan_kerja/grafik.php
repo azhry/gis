@@ -79,10 +79,12 @@
 				for ( var i = 0; i < json.main.length; i++ ) {
 
 					var data 	= [];
+					var current_progress = 0;
 					for ( var j = 0; j < 4; j++ ) {
 
 						var progress = json.main[i].progress[j];
-						data.push( progress != undefined ? progress.progress : 0 );
+						current_progress += Number(progress != undefined ? progress.progress : 0);
+						data.push( progress != undefined ? current_progress : 0 );
 
 					}
 

@@ -456,7 +456,9 @@ class Admin extends MY_Controller
 			exit;	
 		}
 
-		$this->data['progress']	= $this->progress_m->get(['id_proyek' => $this->data['id_proyek']]);
+		$this->load->model( 'proyek_m' );
+		$this->data['progress']	= $this->progress_m->get_by_order( 'periode', 'ASC', ['id_proyek' => $this->data['id_proyek']] );
+		$this->data['proyek']	= $this->proyek_m->get_row([ 'id' => $this->data['id_proyek'] ]);
 		$this->data['title']	= 'Data Progress | ' . $this->title;
 		$this->data['content']	= 'admin/data_progress';
 		$this->template( $this->data, 'admin' );

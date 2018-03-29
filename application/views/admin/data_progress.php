@@ -25,15 +25,19 @@
                             <th>No</th>
                             <th>Serapan Anggaran</th>
                             <th>Periode</th>
+                            <th>Persentase</th>
+                            <th>Perkembangan</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i=1; foreach($progress as $row): ?>
+                        <?php $current_progress = 0; $i=1; foreach($progress as $row): $current_progress += ($row->serapan_anggaran / $proyek->anggaran) * 100; ?>
                         <tr>
                             <td><?= $i ?></td>
                             <td><?= $row->serapan_anggaran ?></td>
                             <td><?= $row->periode ?></td>
+                            <td><?= ($row->serapan_anggaran / $proyek->anggaran) * 100 . '%' ?></td>
+                            <td><?= $current_progress . '%' ?></td>
                             <td>
                                 <center>
                                 <a href="<?= base_url( 'admin/edit-progress/' . $row->id_progress ) ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
