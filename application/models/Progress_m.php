@@ -50,11 +50,11 @@ class Progress_m extends MY_Model {
 			$proyek = $this->proyek_m->get([ 'id_kabupaten' => $region->id_kabupaten ]);
 			foreach ( $proyek as $row ) {
 
-				$this->db->select( '*, ((serapan_anggaran / ' . $row->anggaran . ') * 100) AS progress' );
+				$this->db->select( '*, SUM((serapan_anggaran / ' . $row->anggaran . ') * 100) AS progress' );
 				$this->db->from( $this->data['table_name'] );
 				$this->db->where([ 'id_proyek' => $row->id ]);
 				$this->db->order_by( 'periode', 'DESC' );
-				$this->db->limit(1);
+				// $this->db->limit(1);
 				$query = $this->db->get();
 				$progress = $query->row();
 				if ( isset( $progress ) )

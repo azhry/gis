@@ -171,7 +171,7 @@
                                     <?php endforeach; ?>
                                     '<div class="progress">' +
                                         '<div class="progress-bar" role="progressbar" aria-valuenow="<?= $row->progress ?>" aria-valuemin="0" aria-valuemax="100" style="width:<?= $row->progress ?>%">' +
-                                            '<?= $row->progress ?>%' +
+                                             (Math.round(<?= $row->progress ?> * 100) / 100) + '%' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
