@@ -64,7 +64,7 @@ class Progress_m extends MY_Model {
 
 			}
 
-			$result[count( $result ) - 1]['progress'] = $total_progress / count( $proyek );
+			$result[count( $result ) - 1]['progress'] = !count( $proyek ) ? 0 : $total_progress / count( $proyek );
 
 		}
 
