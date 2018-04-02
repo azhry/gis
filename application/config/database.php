@@ -75,8 +75,8 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '85.10.205.173:3306',
-	'username' => 'fitri',
+	'hostname' => '52.187.182.63',
+	'username' => 'azhary',
 	'password' => '4kuGanteng',
 	'database' => 'gispu',
 	'dbdriver' => 'mysqli',
