@@ -47,8 +47,14 @@ class Kepala_satuan_kerja extends MY_Controller
 			exit;	
 		}
 
+		$this->data['tahun']		= $this->proyek_m->get_tahun();
 		$this->data['kabupaten']	= $this->kabupaten_m->get();
-		$this->data['proyek']			= $this->proyek_m->get_proyek();
+		$this->data['thn_data']		= $this->uri->segment( 3 );
+		if ( isset( $this->data['thn_data'] ) ) {
+			$this->data['proyek']		= $this->proyek_m->get_proyek([ 'thn_data' => $this->data['thn_data'] ]);
+		} else {
+			$this->data['proyek']		= $this->proyek_m->get_proyek();
+		}
 		$this->data['title']		= 'Data Proyek | ' . $this->title;
 		$this->data['content']		= 'kepala_satuan_kerja/data_proyek';
 		$this->template($this->data);	

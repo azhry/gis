@@ -14,6 +14,12 @@
                 <div class="panel-actions"></div>
                 <h3 class="panel-title">Data Proyek</h3>
             </header>
+            <div class="btn-group">
+                <a href="<?= base_url( 'kepala-satuan-kerja/proyek' ) ?>" class="btn btn-primary">Semua</a>
+                <?php foreach ( $tahun as $row ): ?>
+                    <a href="<?= base_url( 'kepala-satuan-kerja/proyek/' . $row->tahun ) ?>" class="btn btn-primary"><?= $row->tahun ?></a>
+                <?php endforeach; ?>
+            </div>
             <div class="panel-body">
                 <div>
                     <?= $this->session->flashdata('msg') ?>
@@ -25,6 +31,7 @@
                             <th>Foto</th> -->
                             <th>Nama Proyek</th>
                             <th>Kabupaten</th>
+                            <th>Tahun</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -37,6 +44,7 @@
                             </td> -->
                             <td><?= $row->namobj ?></td>
                             <td><?= $row->nama_kabupaten ?></td>
+                            <td><?= $row->thn_data ?></td>
                             <td>
                                 <center>
                                 <a href="<?= base_url('kepala_satuan_kerja/detail-proyek/' . $row->id) ?>" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Detail</a>

@@ -9,6 +9,16 @@ class Proyek_m extends MY_Model
 		$this->data['primary_key']	= 'id';
 	}
 
+	public function get_tahun() {
+
+		$this->db->select( 'thn_data AS tahun' );
+		$this->db->from( $this->data['table_name'] );
+		$this->db->group_by( 'thn_data' );
+		$query = $this->db->get();
+		return $query->result();
+
+	}
+
 	public function get_proyek($cond = '')
 	{
 		if ((is_array($cond) && count($cond) > 0) or (is_string($cond) && strlen($cond) >= 3))

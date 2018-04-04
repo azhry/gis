@@ -100,7 +100,7 @@
 				}
 
 				var ctx = new Chart(document.getElementById("laporan-keseluruhan-proyek"), {
-				    type: 'line',
+				    type: 'bar',
 				    data: {
 				      labels: labels,
 				      datasets: datasets
